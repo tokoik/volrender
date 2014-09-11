@@ -326,9 +326,9 @@ public:
   //
   // •¨‘Ì‚Ì‰ñ“]‚ð“¾‚é
   //
-  const GgTrackball &getTb() const
+  const GgMatrix &getTb() const
   {
-    return tb;
+    return tb.getMatrix();
   }
 
   //

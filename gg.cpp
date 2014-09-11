@@ -6746,14 +6746,17 @@ void gg::GgTrackball::stop(float x, float y)
 */
 void gg::GgTrackball::rotate(const GgQuaternion &q)
 {
-  // 現在の回転の四元数に修正分の四元数を掛けて合成する
-  tq = q * cq;
+  if (!drag)
+  {
+    // 保存されている四元数に修正分の四元数を掛けて合成する
+    tq = q * cq;
 
-  // 誤差を吸収するために正規化しておく
-  cq = tq.normalize();
+    // 合成した四元数から回転の変換行列を求める
+    tq.getMatrix(rt);
 
-  // 合成した四元数から回転の変換行列を求める
-  cq.getMatrix(rt);
+    // 誤差を吸収するために正規化しておく
+    cq = tq.normalize();
+  }
 }
 
 /*

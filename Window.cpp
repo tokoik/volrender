@@ -78,7 +78,7 @@ Window::Window(int width, int height, const char *title, GLFWmonitor *monitor, G
 
 #if STEREO == OCULUS
   // プログラムオブジェクト, VAO / VBO, Oculus Rift のデバイスマネージャーの作成は最初一度だけ行う
-  if (!count)
+  if (count == 0)
   {
     // Oculus Rift のレンズの歪みを補正するシェーダプログラム
     ocuProgram = ggLoadShader("oculus.vert", "oculus.frag");
@@ -221,7 +221,7 @@ Window::~Window()
 
 #if STEREO == OCULUS
   // プログラムオブジェクト, VAO / VBO, Oculus Rift のデバイスマネージャーは最後に削除する
-  if (count)
+  if (count == 0)
   {
     // プログラムオブジェクトの削除
     glDeleteProgram(ocuProgram);
@@ -229,10 +229,6 @@ Window::~Window()
     // VAO の削除
     glDeleteBuffers(1, &ocuVbo);
     glDeleteVertexArrays(1, &ocuVao);
-
-    // Oculus Rift のデバイスマネージャーの削除
-    pManager->Release();
-    System::Destroy();
   }
 
   // FBO の削除
@@ -385,8 +381,13 @@ void Window::swapBuffers()
       ez += (axes[1] - origin[1]) * axesSpeedScale;
 
       // 物体を回転する
-      tb.rotate(ggRotateQuaternion(0.0f, 1.0f, 0.0f, (axes[2 + appleOffset] - origin[2]) * axesAngleScale));
-      tb.rotate(ggRotateQuaternion(1.0f, 0.0f, 0.0f, (axes[3 + appleOffset] - origin[3]) * axesAngleScale));
+      const GLfloat dx(axes[2 + appleOffset] - origin[2]);
+      const GLfloat dy(axes[3 + appleOffset] - origin[3]);
+      const GLfloat l = dx * dx + dy * dy;
+      if (l > 0.0f)
+      {
+        tb.rotate(ggRotateQuaternion(dy, dx, 0.0f, l * axesAngleScale));
+      }
     }
 
     // ボタン
@@ -395,7 +396,7 @@ void Window::swapBuffers()
     if (btnsCount > 3)
     {
       // 閾値を調整する
-      float t(threshold + GLfloat(btns[2] - btns[1]) * btnsScale);
+      const float t(threshold + GLfloat(btns[2] - btns[1]) * btnsScale);
       if (t >= 0.0f && t <= 1.0f) threshold = t;
     }
 
@@ -571,7 +572,7 @@ void Window::wheel(GLFWwindow *window, double x, double y)
 
   if (instance)
   {
-    GLfloat t = instance->threshold - threasholdStep * GLfloat(y);
+    const GLfloat t = instance->threshold - threasholdStep * GLfloat(y);
     if (t >= 0.0f && t <= 1.0f) instance->threshold = t;
   }
 }

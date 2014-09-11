@@ -66,26 +66,8 @@ const GLfloat zFar(10.0f);                              // 後方面までの距離
 const GLfloat speedScale(0.00005f);                     // フレームあたりの移動速度係数
 const GLfloat threasholdStep(0.01f);                    // 閾値の調整係数
 const GLfloat axesSpeedScale(0.01f);                    // ゲームパッドのスティックの速度の係数
-const GLfloat axesAngleScale(0.02f);                    // ゲームパッドのスティックの角速度の係数
+const GLfloat axesAngleScale(0.03f);                    // ゲームパッドのスティックの角速度の係数
 const GLfloat btnsScale(0.005f);                        // ゲームパッドのボタンの係数
-
-// 光源
-const GgSimpleShader::Light light =
-{
-  { 0.4f, 0.4f, 0.4f, 1.0f },                           // 環境光成分
-  { 0.8f, 0.8f, 0.8f, 1.0f },                           // 拡散反射光成分
-  { 0.8f, 0.8f, 0.8f, 1.0f },                           // 鏡面光成分
-  { 0.0f, 0.5f, 1.0f, 0.0f }                            // 位置
-};
-
-// 材質
-const GgSimpleShader::Material material =
-{
-  { 0.8f, 0.8f, 0.8f, 1.0f },                           // 環境光の反射係数
-  { 0.8f, 0.8f, 0.8f, 1.0f },                           // 拡散反射係数
-  { 0.2f, 0.2f, 0.2f, 1.0f },                           // 鏡面反射係数
-  50.0f                                                 // 輝き係数
-};
 
 // 境界色 (Oculus Rift 表示時の表示範囲外の色)
 const GLfloat border[] = { 0.0, 0.0, 0.0, 0.0 };

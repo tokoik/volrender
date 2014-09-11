@@ -4163,7 +4163,7 @@ namespace gg
     float sx, sy;                           // マウスの絶対位置→ウィンドウ内での相対位置の換算係数
     GgQuaternion cq;                        // 回転の初期値 (四元数)
     GgQuaternion tq;                        // ドラッグ中の回転 (四元数)
-    GLfloat rt[16];                         // 回転の変換行列
+    GgMatrix rt;                            // 回転の変換行列
 
   public:
 
@@ -4210,6 +4210,13 @@ namespace gg
     //! \brief 現在の回転の変換行列を取り出す.
     //!   \return 回転の変換を表す GLfloat[16] 型の配列.
     const GLfloat *get() const
+    {
+      return rt.get();
+    }
+
+    //! \brief 現在の回転の変換行列を取り出す.
+    //!   \return 回転の変換を表す GgMatrix 型の変換行列.
+    const GgMatrix &getMatrix() const
     {
       return rt;
     }
