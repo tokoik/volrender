@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D19D2B919C1C3E000A05B5B /* oculus.frag in Resources */ = {isa = PBXBuildFile; fileRef = 7D19D2B719C1C3E000A05B5B /* oculus.frag */; };
+		7D19D2BA19C1C3E000A05B5B /* oculus.vert in Resources */ = {isa = PBXBuildFile; fileRef = 7D19D2B819C1C3E000A05B5B /* oculus.vert */; };
 		7D46CF5B19C06F07006574CB /* gg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF5919C06F07006574CB /* gg.cpp */; };
 		7D46CF6219C06F14006574CB /* Noise1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF5C19C06F14006574CB /* Noise1.cpp */; };
 		7D46CF6319C06F14006574CB /* Noise2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF5E19C06F14006574CB /* Noise2.cpp */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D19D2B719C1C3E000A05B5B /* oculus.frag */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = oculus.frag; sourceTree = "<group>"; };
+		7D19D2B819C1C3E000A05B5B /* oculus.vert */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = oculus.vert; sourceTree = "<group>"; };
 		7D1E90EE1123E36C005E6C75 /* volrender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = volrender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D1E90F11123E36C005E6C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D46CF5819C06EFB006574CB /* config.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 				7D46CF6A19C06F49006574CB /* gradient.frag */,
 				7D46CF6F19C06F52006574CB /* slice.vert */,
 				7D46CF6E19C06F52006574CB /* slice.frag */,
+				7D19D2B819C1C3E000A05B5B /* oculus.vert */,
+				7D19D2B719C1C3E000A05B5B /* oculus.frag */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,6 +150,8 @@
 				7D46CF6C19C06F49006574CB /* gradient.frag in Resources */,
 				7D46CF7119C06F52006574CB /* slice.vert in Resources */,
 				7D46CF7019C06F52006574CB /* slice.frag in Resources */,
+				7D19D2BA19C1C3E000A05B5B /* oculus.vert in Resources */,
+				7D19D2B919C1C3E000A05B5B /* oculus.frag in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,8 +201,18 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/LibOVR/Include,
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = /usr/local/LibOVR/Lib/MacOS/Debug;
+				OTHER_CFLAGS = (
+					"-fno-rtti",
+					"-D_DEBUG",
+				);
 				OTHER_LDFLAGS = (
 					libglfw3_macos.a,
 					"-framework",
@@ -205,6 +223,7 @@
 					IOKit,
 					"-framework",
 					Cocoa,
+					"-lovr",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = volrender;
@@ -222,8 +241,15 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/LibOVR/Include,
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = /usr/local/LibOVR/Lib/MacOS/Release;
+				OTHER_CFLAGS = "-fno-rtti";
 				OTHER_LDFLAGS = (
 					libglfw3_macos.a,
 					"-framework",
@@ -234,6 +260,7 @@
 					IOKit,
 					"-framework",
 					Cocoa,
+					"-lovr",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = volrender;
