@@ -1,61 +1,61 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-// å…‰æº
-const vec4 lamb = vec4(0.4f, 0.4f, 0.4f, 1.0f);     // ç’°å¢ƒå…‰æˆåˆ†
-const vec4 ldiff = vec4(0.8f, 0.8f, 0.8f, 1.0f);    // æ‹¡æ•£åå°„å…‰æˆåˆ†
-const vec4 lspec = vec4(0.8f, 0.8f, 0.8f, 1.0f);    // é¡é¢åå°„å…‰æˆåˆ†
-const vec4 pl = vec4(0.0f, 0.5f, 1.0f, 0.0f);       // ä½ç½®
+// ŒõŒ¹
+const vec4 lamb = vec4(0.4f, 0.4f, 0.4f, 1.0f);     // ŠÂ‹«Œõ¬•ª
+const vec4 ldiff = vec4(0.8f, 0.8f, 0.8f, 1.0f);    // ŠgU”½ËŒõ¬•ª
+const vec4 lspec = vec4(0.8f, 0.8f, 0.8f, 1.0f);    // ‹¾–Ê”½ËŒõ¬•ª
+const vec4 pl = vec4(0.0f, 0.5f, 1.0f, 0.0f);       // ˆÊ’u
 
-// æè³ª
-const vec4 kamb = vec4(0.8f, 0.8f, 0.4f, 1.0f);     // ç’°å¢ƒå…‰ã®åå°„ä¿‚æ•°
-const vec4 kdiff = vec4(0.8f, 0.8f, 0.4f, 1.0f);    // æ‹¡æ•£åå°„ä¿‚æ•°
-const vec4 kspec = vec4(0.2f, 0.2f, 0.2f, 1.0f);    // é¡é¢åå°„ä¿‚æ•°
-const float kshi = 50.0f;                           // è¼ãä¿‚æ•°
+// Ş¿
+const vec4 kamb = vec4(0.8f, 0.8f, 0.4f, 1.0f);     // ŠÂ‹«Œõ‚Ì”½ËŒW”
+const vec4 kdiff = vec4(0.8f, 0.8f, 0.4f, 1.0f);    // ŠgU”½ËŒW”
+const vec4 kspec = vec4(0.2f, 0.2f, 0.2f, 1.0f);    // ‹¾–Ê”½ËŒW”
+const float kshi = 50.0f;                           // ‹P‚«ŒW”
 
-// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µãƒ³ãƒ—ãƒ©
+// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒ“ƒvƒ‰
 uniform sampler3D vtex;
 
-// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å‹¾é…ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µãƒ³ãƒ—ãƒ©
+// ƒeƒNƒXƒ`ƒƒ‚ÌŒù”zƒeƒNƒXƒ`ƒƒ‚ÌƒTƒ“ƒvƒ‰
 uniform sampler3D gtex;
 
-// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®å¤‰æ›è¡Œåˆ—
+// ƒeƒNƒXƒ`ƒƒÀ•W‚Ì•ÏŠ·s—ñ
 uniform mat4 mt;
 
-// é–¾å€¤
+// è‡’l
 uniform float threshold;
 
-// ã‚¹ãƒ©ã‚¤ã‚¹ã®è¡¨é¢ä¸Šã®ä½ç½®
+// ƒXƒ‰ƒCƒX‚Ì•\–Êã‚ÌˆÊ’u
 in vec4 p;
 
-// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
+// ƒeƒNƒXƒ`ƒƒÀ•W
 in vec3 t;
 
-// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã«å‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+// ƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚Éo—Í‚·‚éƒf[ƒ^
 layout (location = 0) out vec4 fc;
 
 void main()
 {
-  // å…ƒã®ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®æ¿ƒåº¦ã¨é–¾å€¤ã®å·®
+  // Œ³‚Ìƒ{ƒŠƒ…[ƒ€‚Ì”Z“x‚Æè‡’l‚Ì·
   float v = texture(vtex, t).a - threshold;
 
-  // æ¿ƒåº¦ãŒé–¾å€¤ã‚’ä¸‹å›ã£ã¦ã„ãŸã‚‰ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã‚’æ¨ã¦ã‚‹
+  // ”Z“x‚ªè‡’l‚ğ‰º‰ñ‚Á‚Ä‚¢‚½‚çƒtƒ‰ƒOƒƒ“ƒg‚ğÌ‚Ä‚é
   if (v < 0.0) discard;
 
-  // ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®å‹¾é…
+  // ƒ{ƒŠƒ…[ƒ€‚ÌŒù”z
   vec4 g = texture(gtex, t);
 
 #if 1
-  vec3 e = normalize(p.xyz / p.w);                  // è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
-  vec3 l = normalize((pl * p.w - p * pl.w).xyz);    // å…‰ç·šãƒ™ã‚¯ãƒˆãƒ«
-  vec3 n = normalize(((g * 2.0 - 1.0) * mt).xyz);   // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
-  vec3 h = normalize(l - e);                        // ä¸­é–“ãƒ™ã‚¯ãƒˆãƒ«
+  vec3 e = normalize(p.xyz / p.w);                  // ‹üƒxƒNƒgƒ‹
+  vec3 l = normalize((pl * p.w - p * pl.w).xyz);    // ŒõüƒxƒNƒgƒ‹
+  vec3 n = normalize(((g * 2.0 - 1.0) * mt).xyz);   // –@üƒxƒNƒgƒ‹
+  vec3 h = normalize(l - e);                        // ’†ŠÔƒxƒNƒgƒ‹
 
   vec4 idiff = max(dot(n, l), 0.0) * kdiff * ldiff + kamb * lamb;
   vec4 ispec = pow(max(dot(n, h), 0.0), kshi) * kspec * lspec;
   fc = vec4((idiff + ispec).rgb, v);
 #else
-  // å‹¾é…ã‚’ãã®ã¾ã¾ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã®è‰²ã«ä½¿ã†
+  // Œù”z‚ğ‚»‚Ì‚Ü‚Üƒtƒ‰ƒOƒƒ“ƒg‚ÌF‚Ég‚¤
   fc = vec4(g.rgb, v);
 #endif
 }
