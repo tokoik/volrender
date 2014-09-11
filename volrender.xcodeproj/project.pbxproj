@@ -1,0 +1,268 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7D46CF5B19C06F07006574CB /* gg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF5919C06F07006574CB /* gg.cpp */; };
+		7D46CF6219C06F14006574CB /* Noise1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF5C19C06F14006574CB /* Noise1.cpp */; };
+		7D46CF6319C06F14006574CB /* Noise2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF5E19C06F14006574CB /* Noise2.cpp */; };
+		7D46CF6419C06F14006574CB /* Noise3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF6019C06F14006574CB /* Noise3.cpp */; };
+		7D46CF6719C06F1D006574CB /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF6519C06F1D006574CB /* Window.cpp */; };
+		7D46CF6919C06F31006574CB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF6819C06F31006574CB /* main.cpp */; };
+		7D46CF6C19C06F49006574CB /* gradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6A19C06F49006574CB /* gradient.frag */; };
+		7D46CF6D19C06F49006574CB /* gradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6B19C06F49006574CB /* gradient.vert */; };
+		7D46CF7019C06F52006574CB /* slice.frag in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6E19C06F52006574CB /* slice.frag */; };
+		7D46CF7119C06F52006574CB /* slice.vert in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6F19C06F52006574CB /* slice.vert */; };
+		7D7AF85F1222C8CC003A0434 /* opengl.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D7AF85E1222C8CC003A0434 /* opengl.icns */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7D1E90EE1123E36C005E6C75 /* volrender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = volrender.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D1E90F11123E36C005E6C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D46CF5819C06EFB006574CB /* config.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		7D46CF5919C06F07006574CB /* gg.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = gg.cpp; sourceTree = "<group>"; };
+		7D46CF5A19C06F07006574CB /* gg.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = gg.h; sourceTree = "<group>"; };
+		7D46CF5C19C06F14006574CB /* Noise1.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = Noise1.cpp; sourceTree = "<group>"; };
+		7D46CF5D19C06F14006574CB /* Noise1.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = Noise1.h; sourceTree = "<group>"; };
+		7D46CF5E19C06F14006574CB /* Noise2.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = Noise2.cpp; sourceTree = "<group>"; };
+		7D46CF5F19C06F14006574CB /* Noise2.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = Noise2.h; sourceTree = "<group>"; };
+		7D46CF6019C06F14006574CB /* Noise3.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = Noise3.cpp; sourceTree = "<group>"; };
+		7D46CF6119C06F14006574CB /* Noise3.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = Noise3.h; sourceTree = "<group>"; };
+		7D46CF6519C06F1D006574CB /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		7D46CF6619C06F1D006574CB /* Window.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		7D46CF6819C06F31006574CB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7D46CF6A19C06F49006574CB /* gradient.frag */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = gradient.frag; sourceTree = "<group>"; };
+		7D46CF6B19C06F49006574CB /* gradient.vert */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = gradient.vert; sourceTree = "<group>"; };
+		7D46CF6E19C06F52006574CB /* slice.frag */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = slice.frag; sourceTree = "<group>"; };
+		7D46CF6F19C06F52006574CB /* slice.vert */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; path = slice.vert; sourceTree = "<group>"; };
+		7D7AF85E1222C8CC003A0434 /* opengl.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = opengl.icns; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7D1E90EC1123E36C005E6C75 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7D1E90D81123E2F7005E6C75 = {
+			isa = PBXGroup;
+			children = (
+				7D1E90EF1123E36C005E6C75 /* Products */,
+				7D1E90F11123E36C005E6C75 /* Info.plist */,
+				7D7AF85E1222C8CC003A0434 /* opengl.icns */,
+				7D46CF5819C06EFB006574CB /* config.h */,
+				7D46CF6819C06F31006574CB /* main.cpp */,
+				7D46CF5A19C06F07006574CB /* gg.h */,
+				7D46CF5919C06F07006574CB /* gg.cpp */,
+				7D46CF5D19C06F14006574CB /* Noise1.h */,
+				7D46CF5C19C06F14006574CB /* Noise1.cpp */,
+				7D46CF5F19C06F14006574CB /* Noise2.h */,
+				7D46CF5E19C06F14006574CB /* Noise2.cpp */,
+				7D46CF6119C06F14006574CB /* Noise3.h */,
+				7D46CF6019C06F14006574CB /* Noise3.cpp */,
+				7D46CF6619C06F1D006574CB /* Window.h */,
+				7D46CF6519C06F1D006574CB /* Window.cpp */,
+				7D46CF6B19C06F49006574CB /* gradient.vert */,
+				7D46CF6A19C06F49006574CB /* gradient.frag */,
+				7D46CF6F19C06F52006574CB /* slice.vert */,
+				7D46CF6E19C06F52006574CB /* slice.frag */,
+			);
+			sourceTree = "<group>";
+		};
+		7D1E90EF1123E36C005E6C75 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7D1E90EE1123E36C005E6C75 /* volrender.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7D1E90ED1123E36C005E6C75 /* volrender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D1E90F41123E36D005E6C75 /* Build configuration list for PBXNativeTarget "volrender" */;
+			buildPhases = (
+				7D1E90EA1123E36C005E6C75 /* Resources */,
+				7D1E90EB1123E36C005E6C75 /* Sources */,
+				7D1E90EC1123E36C005E6C75 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = volrender;
+			productName = volrender;
+			productReference = 7D1E90EE1123E36C005E6C75 /* volrender.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7D1E90DA1123E2F7005E6C75 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = 7D1E90DD1123E2F7005E6C75 /* Build configuration list for PBXProject "volrender" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 7D1E90D81123E2F7005E6C75;
+			productRefGroup = 7D1E90EF1123E36C005E6C75 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7D1E90ED1123E36C005E6C75 /* volrender */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7D1E90EA1123E36C005E6C75 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D7AF85F1222C8CC003A0434 /* opengl.icns in Resources */,
+				7D46CF6D19C06F49006574CB /* gradient.vert in Resources */,
+				7D46CF6C19C06F49006574CB /* gradient.frag in Resources */,
+				7D46CF7119C06F52006574CB /* slice.vert in Resources */,
+				7D46CF7019C06F52006574CB /* slice.frag in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7D1E90EB1123E36C005E6C75 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D46CF6419C06F14006574CB /* Noise3.cpp in Sources */,
+				7D46CF6719C06F1D006574CB /* Window.cpp in Sources */,
+				7D46CF6919C06F31006574CB /* main.cpp in Sources */,
+				7D46CF6319C06F14006574CB /* Noise2.cpp in Sources */,
+				7D46CF6219C06F14006574CB /* Noise1.cpp in Sources */,
+				7D46CF5B19C06F07006574CB /* gg.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7D1E90DB1123E2F7005E6C75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		7D1E90DC1123E2F7005E6C75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		7D1E90F21123E36D005E6C75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					libglfw3_macos.a,
+					"-framework",
+					OpenGL,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					IOKit,
+					"-framework",
+					Cocoa,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = volrender;
+			};
+			name = Debug;
+		};
+		7D1E90F31123E36D005E6C75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					libglfw3_macos.a,
+					"-framework",
+					OpenGL,
+					"-framework",
+					CoreVideo,
+					"-framework",
+					IOKit,
+					"-framework",
+					Cocoa,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = volrender;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7D1E90DD1123E2F7005E6C75 /* Build configuration list for PBXProject "volrender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D1E90DB1123E2F7005E6C75 /* Debug */,
+				7D1E90DC1123E2F7005E6C75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D1E90F41123E36D005E6C75 /* Build configuration list for PBXNativeTarget "volrender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D1E90F21123E36D005E6C75 /* Debug */,
+				7D1E90F31123E36D005E6C75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7D1E90DA1123E2F7005E6C75 /* Project object */;
+}
