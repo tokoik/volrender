@@ -45,10 +45,10 @@ class Window
   // ドラッグ開始位置
   double cx, cy;
 
-  // カメラの位置
+  // ボリュームデータの位置
   GLfloat ex, ey, ez;
 
-  // 物体の回転
+  // ボリュームデータの回転
   GgTrackball tb;
 
   // 閾値
@@ -324,7 +324,7 @@ public:
 #endif
 
   //
-  // 物体の回転を得る
+  // 回転の変換行列を得る
   //
   const GgMatrix &getTb() const
   {
@@ -332,7 +332,7 @@ public:
   }
 
   //
-  // アルファ値を得る
+  // 閾値を得る
   //
   GLfloat getThreshold() const
   {

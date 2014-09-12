@@ -28,7 +28,7 @@ namespace
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     // バッファオブジェクトを確保する
-    static const GLfloat p[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f };
+    static const GLfloat p[] = { -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f };
     glBufferData(GL_ARRAY_BUFFER, sizeof p, p, GL_STATIC_DRAW);
 
     // 頂点位置は index == 0 の in 変数から得る
@@ -41,7 +41,7 @@ namespace
   //
   // ボリュームデータの作成
   //
-  GLuint makeVolume(GLint width, GLint height, GLint depth, Pattern pattern)
+  GLuint makeVolume(GLint width, GLint height, GLint depth)
   {
     // 作業用メモリ
     std::vector<GLubyte> texture;
@@ -61,36 +61,21 @@ namespace
         for (GLint i = 0; i < width; ++i)
         {
           const double x(double(i) / double(width - 1));
-          GLubyte t;
 
-          switch (pattern)
-          {
-            case CHECKER:
-              t = ((i >> 4) + (j >> 4) + (k >> 4)) & 1 ? 0 : 255;
-              break;
-            case NOISE:
-              t = GLubyte(noise.noise(x, y, z) * 255.0);
-              break;
-            case PERLIN:
-              t = GLubyte(noise.perlin(x, y, z, 4, 0.5) * 255.0);
-              break;
-            case TURBULENCE:
-              t = GLubyte(noise.turbulence(x, y, z, 4, 0.5) * 255.0);
-              break;
-            case SPHERE:
-            {
-              const double px(2.0 * x - 1.0), py(2.0 * y - 1.0), pz(2.0 * z - 1.0);
-              t = GLubyte(255.0 - sqrt(px * px + py * py + pz * pz) * 127.5);
-            }
-              break;
-            default:
-              break;
-          }
-
-          texture.push_back(t);
-          texture.push_back(t);
-          texture.push_back(t);
-          texture.push_back(t);
+#if VOLUMETYPE == CHECKER
+          texture.push_back(((i >> 4) + (j >> 4) + (k >> 4)) & 1 ? 0 : 255);
+#elif VOLUMETYPE == NOISE
+          texture.push_back(GLubyte(noise.noise(x, y, z) * 255.0));
+#elif VOLUMETYPE == PERLIN
+          texture.push_back(GLubyte(noise.perlin(x, y, z, 4, 0.5) * 255.0));
+#elif VOLUMETYPE == TURBULENCE
+          texture.push_back(GLubyte(noise.turbulence(x, y, z, 4, 0.5) * 255.0));
+#elif VOLUMETYPE == SPHERE
+          const double px(2.0 * x - 1.0), py(2.0 * y - 1.0), pz(2.0 * z - 1.0);
+          texture.push_back(GLubyte(255.0 - sqrt(px * px + py * py + pz * pz) * 127.5));
+#else
+          texture.push_back(255);
+#endif
         }
       }
     }
@@ -101,8 +86,8 @@ namespace
     glBindTexture(GL_TEXTURE_3D, tex);
 
     // テクスチャを割り当てる
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, width, height, depth, 0,
-      GL_RGBA, GL_UNSIGNED_BYTE, &texture[0]);
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, width, height, depth, 0,
+      GL_RED, GL_UNSIGNED_BYTE, &texture[0]);
 
     // テクスチャの拡大・縮小に線形補間を用いる
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -116,95 +101,6 @@ namespace
     // テクスチャの境界色を設定する (ボリュームの外には何もない)
     static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, black);
-
-    return tex;
-  }
-
-  //
-  // 勾配の計算
-  //
-  GLuint gradient(GLuint vao, GLuint volume, GLint width, GLint height, GLint depth)
-  {
-    // テクスチャオブジェクトを作成して結合する
-    GLuint tex;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_3D, tex);
-
-    // テクスチャを割り当てる
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, width, height, depth, 0,
-      GL_RGBA, GL_UNSIGNED_BYTE, 0);
-
-    // テクスチャの拡大・縮小に線形補間を用いる
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-    // テクスチャからはみ出た部分には境界色を用いる
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
-
-    // テクスチャの境界色を設定する
-    static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 0.0f };
-    glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, white);
-
-    // 現在のビューポートを保存する
-    GLint vp[4];
-    glGetIntegerv(GL_VIEWPORT, vp);
-
-    // ビューポートをフレームバッファオブジェクトのサイズに合わせる
-    glViewport(0, 0, width, height);
-
-    // フレームバッファオブジェクトを作成してそこに描画する
-    GLuint fb;
-    glGenFramebuffers(1, &fb);
-    glBindFramebuffer(GL_FRAMEBUFFER, fb);
-
-    // 描画は GL_COLOR_ATTACHIMENT0 に行う
-    static const GLenum bufs[] = { GL_COLOR_ATTACHMENT0 };
-    glDrawBuffers(1, bufs);
-
-    // デプスバッファには描画しない
-    glDepthMask(GL_FALSE);
-
-    // アルファブレンディングは行わない
-    glDisable(GL_BLEND);
-
-    // シェーダプログラムを作成する
-    const GLuint program(ggLoadShader("gradient.vert", "gradient.frag"));
-    const GLint texLoc(glGetUniformLocation(program, "tex"));
-    const GLint zLoc(glGetUniformLocation(program, "z"));
-
-    // シェーダの使用を開始する
-    glUseProgram(program);
-    glUniform1i(texLoc, 0);
-
-    // 3D テクスチャをマッピングする
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_3D, volume);
-
-    // レイヤごとに描画する
-    glBindVertexArray(vao);
-    for (GLint z = 0; z < depth; ++z)
-    {
-      // フレームバッファオブジェクトにカラーバッファとしてアレイテクスチャのレイヤを結合する
-      glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex, 0, z);
-
-      // 3D テクスチャをクリッピング空間を覆う矩形ポリゴンにマッピングしてレイヤに描画する
-      glUniform1f(zLoc, (GLfloat(z) + 0.5f) / GLfloat(depth));
-      glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    }
-
-    // フレームバッファオブジェクトへの描画を終了して通常の描画に戻す
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // バックバッファに描画する
-    glDrawBuffer(GL_BACK);
-
-    // デプスバッファへの書き込みを許可する
-    glDepthMask(GL_TRUE);
-
-    // ビューポートを復帰する
-    glViewport(vp[0], vp[1], vp[2], vp[3]);
 
     return tex;
   }
@@ -274,18 +170,14 @@ int main(int argc, const char * argv[])
   const GLuint vao(makeSlice());
 
   // 3D テクスチャの作成
-  const GLuint vtex(makeVolume(texWidth, texHeight, texDepth, texPattern));
-
-  // 3D テクスチャの勾配テクスチャの作成
-  const GLuint gtex(gradient(vao, vtex, texWidth, texHeight, texDepth));
+  const GLuint volume(makeVolume(texWidth, texHeight, texDepth));
 
   // シェーダ
   const GLuint program(ggLoadShader("slice.vert", "slice.frag"));
   const GLint mtLoc(glGetUniformLocation(program, "mt"));
   const GLint mcLoc(glGetUniformLocation(program, "mc"));
   const GLint spacingLoc(glGetUniformLocation(program, "spacing"));
-  const GLint vtexLoc(glGetUniformLocation(program, "vtex"));
-  const GLint gtexLoc(glGetUniformLocation(program, "gtex"));
+  const GLint volumeLoc(glGetUniformLocation(program, "volume"));
   const GLint thresholdLoc(glGetUniformLocation(program, "threshold"));
 
   // 隠面消去は行わない
@@ -308,17 +200,12 @@ int main(int argc, const char * argv[])
     glUseProgram(program);
     glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getTb().get());
     glUniform1f(spacingLoc, 1.0f / GLfloat(slices - 1));
-    glUniform1i(vtexLoc, 0);
-    glUniform1i(gtexLoc, 1);
+    glUniform1i(volumeLoc, 0);
     glUniform1f(thresholdLoc, window.getThreshold());
 
     // 3D テクスチャのマッピング
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_3D, vtex);
-
-    // 3D テクスチャの勾配テクスチャのマッピング
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_3D, gtex);
+    glBindTexture(GL_TEXTURE_3D, volume);
 
     // スライスの描画
 #if STEREO == NONE

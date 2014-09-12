@@ -9,17 +9,14 @@
 using namespace gg;
 
 // 3D テクスチャのパターン
-enum Pattern
-{
-  CHECKER = 0,
-  SPHERE = 1,
-  NOISE = 2,
-  PERLIN = 3,
-  TURBULENCE = 4
-};
+#define CHECKER       0
+#define SPHERE        1
+#define NOISE         2
+#define PERLIN        3
+#define TURBULENCE    4
 
 // 使用する 3D テクスチャのパターン
-const Pattern texPattern(TURBULENCE);
+#define VOLUMETYPE    TURBULENCE
 
 // 3D テクスチャのサイズ
 const GLsizei texWidth(32);
@@ -56,7 +53,7 @@ const GLuint fboWidth(1024), fboHeight(1024);           // 補正に使う FBO のサイ
 #endif
 
 // カメラの初期状態
-const GLfloat startPosition[] = { 0.5f, 0.5f, 2.0f };   // カメラの初期位置
+const GLfloat startPosition[] = { 0.0f, 0.0f, -2.0f };  // ボリュームデータの中心の初期位置
 const GLfloat displayCenter(0.5f);                      // ディスプレイの中心位置 (高さの半分
 const GLfloat displayDepth(1.5f);                       // 観測者とディスプレイ面との距離
 const GLfloat zNear(0.1f);                              // 前方面までの距離

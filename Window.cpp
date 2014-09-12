@@ -265,16 +265,16 @@ void Window::clear()
     const GgMatrix mo(ggQuaternionTransposeMatrix(GgQuaternion(o.x, o.y, o.z, o.w)));
 
     // Oculus Rift の向きをモデルビュー変換行列に反映する
-    mv = mo.translate(-ex, -ey, -ez);
+    mv = mo.translate(ex, ey, ez);
   }
   else
   {
     // モデルビュー変換行列を設定する
-    mv = ggTranslate(-ex, -ey, -ez);
+    mv = ggTranslate(ex, ey, ez);
   }
 #else
   // モデルビュー変換行列を設定する
-  mv = ggTranslate(-ex, -ey, -ez);
+  mv = ggTranslate(ex, ey, ez);
 
   // カラーバッファとデプスバッファを消去
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -355,9 +355,9 @@ void Window::swapBuffers()
   // 左ボタンドラッグ
   if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1))
   {
-    // カメラの位置を移動する
-    ex += speedScale * GLfloat(x - cx);
-    ez += speedScale * GLfloat(y - cy);
+    // ボリュームデータの位置を移動する
+    ex -= speedScale * GLfloat(x - cx);
+    ez -= speedScale * GLfloat(y - cy);
   }
 
   // 右ボタンドラッグ
@@ -376,11 +376,11 @@ void Window::swapBuffers()
 
     if (axesCount > 3 + appleOffset)
     {
-      // カメラの位置を移動する
-      ex += (axes[0] - origin[0]) * axesSpeedScale;
-      ez += (axes[1] - origin[1]) * axesSpeedScale;
+      // ボリュームデータの位置を移動する
+      ex -= (axes[0] - origin[0]) * axesSpeedScale;
+      ez -= (axes[1] - origin[1]) * axesSpeedScale;
 
-      // 物体を回転する
+      // ボリュームデータを回転する
       const GLfloat dx(axes[2 + appleOffset] - origin[2]);
       const GLfloat dy(axes[3 + appleOffset] - origin[3]);
       const GLfloat l = dx * dx + dy * dy;
@@ -400,7 +400,7 @@ void Window::swapBuffers()
       if (t >= 0.0f && t <= 1.0f) threshold = t;
     }
 
-    // 物体の回転を元に戻す
+    // ボリュームデータの回転を元に戻す
     if (btnsCount > 4 && btns[4] > 0) tb.reset();
   }
 
@@ -572,7 +572,10 @@ void Window::wheel(GLFWwindow *window, double x, double y)
 
   if (instance)
   {
+    // ホイールの回転量をもとに閾値を求める
     const GLfloat t = instance->threshold - threasholdStep * GLfloat(y);
+
+    //　閾値が [0, 1] の範囲内だったら保存している閾値を更新する
     if (t >= 0.0f && t <= 1.0f) instance->threshold = t;
   }
 }
@@ -594,10 +597,11 @@ void Window::keyboard(GLFWwindow *window, int key, int scancode, int action, int
       switch (key)
       {
       case GLFW_KEY_B:
+        // アルファブレンディングの有効／無効を切り替える
         instance->blend = !instance->blend;
         break;
       case GLFW_KEY_R:
-        // カメラをリセットする
+        // ボリュームデータの位置と角度リセットする
         instance->ex = startPosition[0];
         instance->ey = startPosition[1];
         instance->ez = startPosition[2];

@@ -61,12 +61,6 @@
     <None Include="slice.vert">
       <Filter>シェーダ― ファイル</Filter>
     </None>
-    <None Include="gradient.frag">
-      <Filter>シェーダ― ファイル</Filter>
-    </None>
-    <None Include="gradient.vert">
-      <Filter>シェーダ― ファイル</Filter>
-    </None>
     <None Include="slice.frag">
       <Filter>シェーダ― ファイル</Filter>
     </None>

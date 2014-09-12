@@ -94,8 +94,6 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="gradient.frag" />
-    <None Include="gradient.vert" />
     <None Include="oculus.frag" />
     <None Include="oculus.vert" />
     <None Include="slice.frag" />
