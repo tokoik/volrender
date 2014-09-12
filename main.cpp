@@ -28,7 +28,7 @@ namespace
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     // バッファオブジェクトを確保する
-    static const GLfloat p[] = { -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f };
+    static const GLfloat p[] = { -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f };
     glBufferData(GL_ARRAY_BUFFER, sizeof p, p, GL_STATIC_DRAW);
 
     // 頂点位置は index == 0 の in 変数から得る

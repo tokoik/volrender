@@ -22,11 +22,14 @@ out vec3 t;
 void main()
 {
   // スライスを gl_InstanceID でずらす
-  p = vec4(pv, (float(gl_InstanceID) + 0.5) * spacing - 0.5, 1.0);
+  vec4 p = vec4(pv, float(gl_InstanceID * 2 + 1) * spacing - 1.0, 1.0);
 
-  // スライスのテクスチャ座標はスライスの中心を基準に √3 倍に拡大してから回転する
-  t = (mt * p).xyz * 1.732 + 0.5;
+  // ワールド座標系上の座標値を求める
+  vec4 q = mt * inverse(mc) * p;
 
-  // モデルビュープロジェクション変換をしてからラスタライザに送る
-  gl_Position = mc * p;
+  // テクスチャ座標に直す
+  t = q.xyz / q.w * 0.5 + 0.5;
+
+  // スライスはクリッピング空間の xy 平面いっぱいの大きさで z 方向に等間隔に並べる
+  gl_Position = p;
 }
