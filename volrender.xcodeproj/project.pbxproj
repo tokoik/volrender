@@ -15,8 +15,6 @@
 		7D46CF6419C06F14006574CB /* Noise3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF6019C06F14006574CB /* Noise3.cpp */; };
 		7D46CF6719C06F1D006574CB /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF6519C06F1D006574CB /* Window.cpp */; };
 		7D46CF6919C06F31006574CB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D46CF6819C06F31006574CB /* main.cpp */; };
-		7D46CF6C19C06F49006574CB /* gradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6A19C06F49006574CB /* gradient.frag */; };
-		7D46CF6D19C06F49006574CB /* gradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6B19C06F49006574CB /* gradient.vert */; };
 		7D46CF7019C06F52006574CB /* slice.frag in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6E19C06F52006574CB /* slice.frag */; };
 		7D46CF7119C06F52006574CB /* slice.vert in Resources */ = {isa = PBXBuildFile; fileRef = 7D46CF6F19C06F52006574CB /* slice.vert */; };
 		7D7AF85F1222C8CC003A0434 /* opengl.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D7AF85E1222C8CC003A0434 /* opengl.icns */; };
@@ -39,8 +37,6 @@
 		7D46CF6519C06F1D006574CB /* Window.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Window.cpp; sourceTree = "<group>"; };
 		7D46CF6619C06F1D006574CB /* Window.h */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Window.h; sourceTree = "<group>"; };
 		7D46CF6819C06F31006574CB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; };
-		7D46CF6A19C06F49006574CB /* gradient.frag */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; lineEnding = 0; path = gradient.frag; sourceTree = "<group>"; };
-		7D46CF6B19C06F49006574CB /* gradient.vert */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; lineEnding = 0; path = gradient.vert; sourceTree = "<group>"; };
 		7D46CF6E19C06F52006574CB /* slice.frag */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; lineEnding = 0; path = slice.frag; sourceTree = "<group>"; };
 		7D46CF6F19C06F52006574CB /* slice.vert */ = {isa = PBXFileReference; fileEncoding = 8; lastKnownFileType = sourcecode.glsl; lineEnding = 0; path = slice.vert; sourceTree = "<group>"; };
 		7D7AF85E1222C8CC003A0434 /* opengl.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = opengl.icns; sourceTree = "<group>"; };
@@ -75,8 +71,6 @@
 				7D46CF6019C06F14006574CB /* Noise3.cpp */,
 				7D46CF6619C06F1D006574CB /* Window.h */,
 				7D46CF6519C06F1D006574CB /* Window.cpp */,
-				7D46CF6B19C06F49006574CB /* gradient.vert */,
-				7D46CF6A19C06F49006574CB /* gradient.frag */,
 				7D46CF6F19C06F52006574CB /* slice.vert */,
 				7D46CF6E19C06F52006574CB /* slice.frag */,
 				7D19D2B819C1C3E000A05B5B /* oculus.vert */,
@@ -146,8 +140,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D7AF85F1222C8CC003A0434 /* opengl.icns in Resources */,
-				7D46CF6D19C06F49006574CB /* gradient.vert in Resources */,
-				7D46CF6C19C06F49006574CB /* gradient.frag in Resources */,
 				7D46CF7119C06F52006574CB /* slice.vert in Resources */,
 				7D46CF7019C06F52006574CB /* slice.frag in Resources */,
 				7D19D2BA19C1C3E000A05B5B /* oculus.vert in Resources */,
