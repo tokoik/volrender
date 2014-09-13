@@ -2,16 +2,16 @@
 #extension GL_ARB_explicit_attrib_location : enable
 
 // ŒõŒ¹
-const vec4 lamb = vec4(0.4f, 0.4f, 0.4f, 1.0f);         // ŠÂ‹«Œõ¬•ª
-const vec4 ldiff = vec4(0.8f, 0.8f, 0.8f, 1.0f);        // ŠgU”½ËŒõ¬•ª
-const vec4 lspec = vec4(0.8f, 0.8f, 0.8f, 1.0f);        // ‹¾–Ê”½ËŒõ¬•ª
-const vec4 pl = vec4(0.0f, 0.5f, 1.0f, 0.0f);           // ˆÊ’u
+const vec4 lamb = vec4(0.4, 0.4, 0.4, 1.0);         // ŠÂ‹«Œõ¬•ª
+const vec4 ldiff = vec4(0.8, 0.8, 0.8, 1.0);        // ŠgU”½ËŒõ¬•ª
+const vec4 lspec = vec4(0.8, 0.8, 0.8, 1.0);        // ‹¾–Ê”½ËŒõ¬•ª
+const vec4 pl = vec4(0.0, 0.5, 1.0, 0.0);           // ˆÊ’u
 
 // Ş¿
-const vec4 kamb = vec4(0.8f, 0.8f, 0.4f, 1.0f);         // ŠÂ‹«Œõ‚Ì”½ËŒW”
-const vec4 kdiff = vec4(0.6f, 0.6f, 0.3f, 1.0f);        // ŠgU”½ËŒW”
-const vec4 kspec = vec4(0.4f, 0.4f, 0.2f, 1.0f);        // ‹¾–Ê”½ËŒW”
-const float kshi = 50.0f;                               // ‹P‚«ŒW”
+const vec4 kamb = vec4(0.8, 0.8, 0.4, 1.0);         // ŠÂ‹«Œõ‚Ì”½ËŒW”
+const vec4 kdiff = vec4(0.6, 0.6, 0.3, 1.0);        // ŠgU”½ËŒW”
+const vec4 kspec = vec4(0.4, 0.4, 0.2, 1.0);        // ‹¾–Ê”½ËŒW”
+const float kshi = 50.0;                               // ‹P‚«ŒW”
 
 // ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒ“ƒvƒ‰
 uniform sampler3D volume;
