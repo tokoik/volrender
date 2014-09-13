@@ -251,11 +251,19 @@ public:
   //
   static void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
 
+  //
+  // テクスチャ変換行列を得る
+  //
+  GgMatrix getMt() const
+  {
+    return tb.get();
+  }
+
 #if STEREO == NONE
   //
   // モデルビュー変換行列を得る
   //
-  const GgMatrix &getMv() const
+  const GgMatrix &getMw() const
   {
     return mv;
   }
@@ -267,21 +275,11 @@ public:
   {
     return mp;
   }
-
-  //
-  // モデルビュープロジェクション変換行列を得る
-  //
-  GgMatrix getMc() const
-  {
-    return mp * mv;
-  }
 #else
   //
   // 左目用のモデルビュー変換行列を得る
   //
-  //   ・左目の描画特有の処理を行う
-  //
-  GgMatrix getMvL() const;
+  GgMatrix getMwL() const;
 
   //
   // 左目用のプロジェクション変換行列を得る
@@ -292,19 +290,9 @@ public:
   }
 
   //
-  // 左目用のモデルビュープロジェクション変換行列を得る
-  //
-  GgMatrix getMcL() const
-  {
-    return mpL * getMvL();
-  }
-
-  //
   // 右目用のモデルビュー変換行列を得る
   //
-  //   ・右目の描画特有の処理を行う
-  //
-  GgMatrix getMvR() const;
+  GgMatrix getMwR() const;
 
   //
   // 右目用のプロジェクション変換行列を得る
@@ -313,23 +301,7 @@ public:
   {
     return mpR;
   }
-
-  //
-  // 右目用のモデルビュープロジェクション変換行列を得る
-  //
-  GgMatrix getMcR() const
-  {
-    return mpR * getMvR();
-  }
 #endif
-
-  //
-  // 回転の変換行列を得る
-  //
-  const GgMatrix &getTb() const
-  {
-    return tb.getMatrix();
-  }
 
   //
   // 閾値を得る

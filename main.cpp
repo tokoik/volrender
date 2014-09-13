@@ -167,17 +167,18 @@ int main(int argc, const char * argv[])
   }
 
   // スライスの作成
-  const GLuint vao(makeSlice());
+  const GLuint slice(makeSlice());
 
   // 3D テクスチャの作成
   const GLuint volume(makeVolume(texWidth, texHeight, texDepth));
 
   // シェーダ
   const GLuint program(ggLoadShader("slice.vert", "slice.frag"));
-  const GLint mtLoc(glGetUniformLocation(program, "mt"));
-  const GLint mcLoc(glGetUniformLocation(program, "mc"));
-  const GLint spacingLoc(glGetUniformLocation(program, "spacing"));
   const GLint volumeLoc(glGetUniformLocation(program, "volume"));
+  const GLint mtLoc(glGetUniformLocation(program, "mt"));
+  const GLint mwLoc(glGetUniformLocation(program, "mw"));
+  const GLint mpLoc(glGetUniformLocation(program, "mp"));
+  const GLint spacingLoc(glGetUniformLocation(program, "spacing"));
   const GLint thresholdLoc(glGetUniformLocation(program, "threshold"));
 
   // 隠面消去は行わない
@@ -198,9 +199,9 @@ int main(int argc, const char * argv[])
 
     // シェーダの使用
     glUseProgram(program);
-    glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getTb().get());
-    glUniform1f(spacingLoc, 1.0f / GLfloat(slices - 1));
     glUniform1i(volumeLoc, 0);
+    glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getMt().get());
+    glUniform1f(spacingLoc, 1.0f / GLfloat(slices - 1));
     glUniform1f(thresholdLoc, window.getThreshold());
 
     // 3D テクスチャのマッピング
@@ -208,15 +209,20 @@ int main(int argc, const char * argv[])
     glBindTexture(GL_TEXTURE_3D, volume);
 
     // スライスの描画
+    glBindVertexArray(slice);
 #if STEREO == NONE
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, window.getMc().get());
+    glUniformMatrix4fv(mwLoc, 1, GL_FALSE, window.getMw().get());
+    glUniformMatrix4fv(mpLoc, 1, GL_FALSE, window.getMp().get());
     glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, slices);
 #else
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, window.getMcL().get());
+    glUniformMatrix4fv(mwLoc, 1, GL_FALSE, window.getMwL().get());
+    glUniformMatrix4fv(mpLoc, 1, GL_FALSE, window.getMpL().get());
     glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, slices);
-    glUniformMatrix4fv(mcLoc, 1, GL_FALSE, window.getMcR().get());
+    glUniformMatrix4fv(mwLoc, 1, GL_FALSE, window.getMwR().get());
+    glUniformMatrix4fv(mpLoc, 1, GL_FALSE, window.getMpR().get());
     glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, slices);
 #endif
+
     // ダブルバッファリング
     window.swapBuffers();
   }

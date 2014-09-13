@@ -19,9 +19,6 @@ uniform sampler3D volume;
 // テクスチャ座標の変換行列
 uniform mat4 mt;
 
-// クリッピング座標系への変換行列
-uniform mat4 mc;
-
 // 閾値
 uniform float threshold;
 
@@ -51,21 +48,20 @@ void main()
   );
 
 #if 1
-  vec3 e = normalize((p * mc[3].w - mc[3] * p.w).xyz);  // 視線ベクトル
-  vec3 l = normalize((pl * p.w - p * pl.w).xyz);        // 光線ベクトル
-  vec3 n = normalize((g * mt).xyz);                     // 法線ベクトル
-  vec3 h = normalize(l - e);                            // 中間ベクトル
+  vec3 l = normalize((pl * p.w - p * pl.w).xyz);  // 光線ベクトル
+  vec3 n = normalize(g.xyz * mat3(mt));           // 法線ベクトル
+  vec3 h = normalize(l - normalize(p.xyz));       // 中間ベクトル
 
   // 拡散反射光＋環境光の反射光
   vec4 idiff = max(dot(n, l), 0.0) * kdiff * ldiff + kamb * lamb;
 
   // 鏡面反射光
-  vec4 ispec = pow(abs(dot(n, h)), kshi) * kspec * lspec;
+  vec4 ispec = pow(max(dot(n, h), 0.0), kshi) * kspec * lspec;
 
   // フラグメントの色
   fc = vec4((idiff + ispec).rgb, v);
 #else
   // 勾配をそのままフラグメントの色に使う
-  fc = vec4(g.rgb, v);
+  fc = vec4(normalize(g.xyz) * 0.5 + 0.5, v);
 #endif
 }
