@@ -26,7 +26,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #if defined(_WIN32)
-//#  pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+#  if !defined(_DEBUG)
+#    pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+#  endif
 #  pragma warning(disable:4996)
 #  ifdef _DEBUG
 #    pragma comment(lib, "glfw3debug.lib")
