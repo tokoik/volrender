@@ -60,9 +60,6 @@
 		7D1E90D81123E2F7005E6C75 = {
 			isa = PBXGroup;
 			children = (
-				7D1E90EF1123E36C005E6C75 /* Products */,
-				7D1E90F11123E36C005E6C75 /* Info.plist */,
-				7D7AF85E1222C8CC003A0434 /* opengl.icns */,
 				7D46CF5819C06EFB006574CB /* config.h */,
 				7D46CF6819C06F31006574CB /* main.cpp */,
 				7D46CF5A19C06F07006574CB /* gg.h */,
@@ -81,6 +78,9 @@
 				7D46CF6E19C06F52006574CB /* slice.frag */,
 				7D19D2B819C1C3E000A05B5B /* oculus.vert */,
 				7D19D2B719C1C3E000A05B5B /* oculus.frag */,
+				7D1E90EF1123E36C005E6C75 /* Products */,
+				7D1E90F11123E36C005E6C75 /* Info.plist */,
+				7D7AF85E1222C8CC003A0434 /* opengl.icns */,
 			);
 			sourceTree = "<group>";
 		};
