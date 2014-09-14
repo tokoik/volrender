@@ -162,23 +162,22 @@ glDrawArraysInstanced() や glDrawElementsInstanced() を使えば，同じポ�
 破棄しなかったフラグメントに関しては，そのフラグメントにマッピングされるセルの位置における濃度勾配を求めます．
 
       // 濃度の勾配を求める
-      vec4 g = vec4(
+      vec3 g = vec3(
         textureOffset(volume, t, ivec3(-1, 0, 0)).r - textureOffset(volume, t, ivec3(1, 0, 0)).r,
         textureOffset(volume, t, ivec3(0, -1, 0)).r - textureOffset(volume, t, ivec3(0, 1, 0)).r,
-        textureOffset(volume, t, ivec3(0, 0, -1)).r - textureOffset(volume, t, ivec3(0, 0, 1)).r,
-        0.0
+        textureOffset(volume, t, ivec3(0, 0, -1)).r - textureOffset(volume, t, ivec3(0, 0, 1)).r
       );
 
 これを正規化したあと，0.5 倍して 0.5 を足して [0, 1] の範囲に直してフラグメントの色に使ってみます．
 
       // 勾配をそのままフラグメントの色に使う
-      fc = vec4(normalize(g.xyz) * 0.5 + 0.5, v);
+      fc = vec4(normalize(g) * 0.5 + 0.5, v);
 
 ##陰影付け
 濃度勾配はそのまま法線ベクトルとして使えるので，それを使って陰影付けを行います．
 
       vec3 l = normalize((pl * p.w - p * pl.w).xyz);  // 光線ベクトル
-      vec3 n = normalize(g.xyz * mat3(mt));           // 法線ベクトル
+      vec3 n = normalize(g * mat3(mt));               // 法線ベクトル
       vec3 h = normalize(l - normalize(p.xyz));       // 中間ベクトル
       
       // 拡散反射光＋環境光の反射光
