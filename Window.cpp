@@ -207,6 +207,11 @@ Window::Window(int width, int height, const char *title, GLFWmonitor *monitor, G
   // 投影変換行列・ビューポートを初期化する
   resize(window, width, height);
 
+#if BENCHMARK
+  // 時間計測用の Query Object を作成する
+  glGenQueries(1, &query);
+#endif
+
   // 参照カウントを増す
   ++count;
 }
@@ -248,6 +253,11 @@ Window::~Window()
 //
 void Window::clear()
 {
+#if  BENCHMARK
+  // 時刻の計測開始
+  glBeginQuery(GL_TIME_ELAPSED, query);
+#endif
+
 #if STEREO == OCULUS
   // 隠面消去処理を有効にする
   glEnable(GL_DEPTH_TEST);
@@ -337,6 +347,16 @@ void Window::swapBuffers()
   glViewport(winW, 0, winW, winH);
   glBindTexture(GL_TEXTURE_2D, ocuFboColor[1]);
   glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+#endif
+
+  glEndQuery(GL_TIME_ELAPSED);
+
+#if BENCHMARK
+  GLint done;
+  do { glGetQueryObjectiv(query, GL_QUERY_RESULT_AVAILABLE, &done); } while (!done);
+  GLuint64 elapsed_time;
+  glGetQueryObjectui64v(query, GL_QUERY_RESULT, &elapsed_time);
+  std::cout << static_cast<double>(elapsed_time) * 0.000001 << std::endl;
 #endif
 
   // エラーチェック

@@ -106,6 +106,97 @@ namespace
   }
 
   //
+  // 勾配の事前計算
+  //
+  GLuint makeGradient(GLuint vao, GLuint volume, GLint width, GLint height, GLint depth)
+  {
+    // テクスチャオブジェクトを作成して結合する
+    GLuint tex;
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_3D, tex);
+    
+    // テクスチャを割り当てる
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, width, height, depth, 0,
+      GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    
+    // テクスチャの拡大・縮小に線形補間を用いる
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    
+    // テクスチャの境界色を設定する
+    glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, border);
+    
+    // テクスチャからはみ出た部分には境界色を用いる
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
+    
+    // テクスチャの結合を解除する
+    glBindTexture(GL_TEXTURE_3D, 0);
+    
+    // 現在のビューポートを保存する
+    GLint vp[4];
+    glGetIntegerv(GL_VIEWPORT, vp);
+    
+    // ビューポートをフレームバッファオブジェクトのサイズに合わせる
+    glViewport(0, 0, width, height);
+    
+    // フレームバッファオブジェクトを作成してそこに描画する
+    GLuint fb;
+    glGenFramebuffers(1, &fb);
+    glBindFramebuffer(GL_FRAMEBUFFER, fb);
+    
+    // 描画は GL_COLOR_ATTACHIMENT0 に行う
+    static const GLenum bufs[] = { GL_COLOR_ATTACHMENT0 };
+    glDrawBuffers(1, bufs);
+    
+    // デプスバッファには描画しない
+    glDepthMask(GL_FALSE);
+    
+    // アルファブレンディングは行わない
+    glDisable(GL_BLEND);
+    
+    // シェーダプログラムを作成する
+    GLuint program = ggLoadShader("gradient.vert", "gradient.frag");
+    GLint texLoc = glGetUniformLocation(program, "tex");
+    GLint zLoc = glGetUniformLocation(program, "z");
+    
+    // シェーダの使用を開始する
+    glUseProgram(program);
+    glUniform1i(texLoc, 0);
+    
+    // 3D テクスチャをマッピングする
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_3D, volume);
+    
+    // レイヤごとに描画する
+    glBindVertexArray(vao);
+    for (GLint z = 0; z < depth; ++z)
+    {
+      // フレームバッファオブジェクトにカラーバッファとしてアレイテクスチャのレイヤを結合する
+      glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex, 0, z);
+      
+      // 3D テクスチャをクリッピング空間を覆う矩形ポリゴンにマッピングしてレイヤに描画する
+      glUniform1f(zLoc, (GLfloat(z) + 0.5f) / GLfloat(depth));
+      glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    }
+    
+    // フレームバッファオブジェクトへの描画を終了して通常の描画に戻す
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    // バックバッファに描画する
+    glDrawBuffer(GL_BACK);
+    
+    // デプスバッファへの書き込みを許可する
+    glDepthMask(GL_TRUE);
+    
+    // ビューポートを復帰する
+    glViewport(vp[0], vp[1], vp[2], vp[3]);
+    
+    return tex;
+  }
+
+  //
   // 終了処理
   //
   void cleanup()
@@ -172,8 +263,12 @@ int main(int argc, const char * argv[])
   // 3D テクスチャの作成
   const GLuint volume(makeVolume(texWidth, texHeight, texDepth));
 
+  // 勾配テクスチャの作成
+  const GLuint gradient(makeGradient(slice, volume, texWidth, texHeight, texDepth));
+  
   // シェーダ
   const GLuint program(ggLoadShader("slice.vert", "slice.frag"));
+  const GLint gradientLoc(glGetUniformLocation(program, "gradient"));
   const GLint volumeLoc(glGetUniformLocation(program, "volume"));
   const GLint mtLoc(glGetUniformLocation(program, "mt"));
   const GLint mwLoc(glGetUniformLocation(program, "mw"));
@@ -200,6 +295,7 @@ int main(int argc, const char * argv[])
     // シェーダの使用
     glUseProgram(program);
     glUniform1i(volumeLoc, 0);
+    glUniform1i(gradientLoc, 1);
     glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getMt().get());
     glUniform1f(spacingLoc, 1.0f / GLfloat(slices - 1));
     glUniform1f(thresholdLoc, window.getThreshold());
@@ -207,6 +303,8 @@ int main(int argc, const char * argv[])
     // 3D テクスチャのマッピング
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_3D, volume);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_3D, gradient);
 
     // スライスの描画
     glBindVertexArray(slice);

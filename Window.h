@@ -160,6 +160,11 @@ class Window
   SensorFusion sensorFusion;
 #endif
 
+#if BENCHMARK
+  // 時間計測用の Query Object
+  GLuint query;
+#endif
+
   // 参照カウント
   static unsigned int count;
 

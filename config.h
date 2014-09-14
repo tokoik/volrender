@@ -8,6 +8,9 @@
 #include "gg.h"
 using namespace gg;
 
+// 時間を計測するなら 1
+#define BENCHMARK     1
+
 // 3D テクスチャのパターン
 #define CHECKER       0
 #define SPHERE        1
