@@ -1,8 +1,8 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-#define GRADIENT 0
-#define SHADING  1
+#define GRADIENT 1  // 勾配を事前計算しないなら 1
+#define SHADING  1  // 陰影付けを行うなら 1
 
 #if SHADING
 // 光源

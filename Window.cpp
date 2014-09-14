@@ -349,9 +349,8 @@ void Window::swapBuffers()
   glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 #endif
 
-  glEndQuery(GL_TIME_ELAPSED);
-
 #if BENCHMARK
+  glEndQuery(GL_TIME_ELAPSED);
   GLint done;
   do { glGetQueryObjectiv(query, GL_QUERY_RESULT_AVAILABLE, &done); } while (!done);
   GLuint64 elapsed_time;
