@@ -123,13 +123,10 @@ namespace
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     
-    // テクスチャの境界色を設定する
-    glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, border);
-    
-    // テクスチャからはみ出た部分には境界色を用いる
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
+    // 勾配は境界色に影響されないようにする
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     
     // テクスチャの結合を解除する
     glBindTexture(GL_TEXTURE_3D, 0);
@@ -265,7 +262,7 @@ int main(int argc, const char * argv[])
 
   // 勾配テクスチャの作成
   const GLuint gradient(makeGradient(slice, volume, texWidth, texHeight, texDepth));
-  
+
   // シェーダ
   const GLuint program(ggLoadShader("slice.vert", "slice.frag"));
   const GLint gradientLoc(glGetUniformLocation(program, "gradient"));
@@ -294,15 +291,15 @@ int main(int argc, const char * argv[])
 
     // シェーダの使用
     glUseProgram(program);
-    glUniform1i(volumeLoc, 0);
-    glUniform1i(gradientLoc, 1);
     glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getMt().get());
     glUniform1f(spacingLoc, 1.0f / GLfloat(slices - 1));
     glUniform1f(thresholdLoc, window.getThreshold());
 
     // 3D テクスチャのマッピング
+    glUniform1i(volumeLoc, 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_3D, volume);
+    glUniform1i(gradientLoc, 1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_3D, gradient);
 
