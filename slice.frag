@@ -1,6 +1,10 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
+#define GRADIENT 0
+#define SHADING  1
+
+#if SHADING
 // 光源
 const vec4 lamb = vec4(0.4, 0.4, 0.4, 1.0);         // 環境光成分
 const vec4 ldiff = vec4(0.8, 0.8, 0.8, 1.0);        // 拡散反射光成分
@@ -11,9 +15,15 @@ const vec4 pl = vec4(0.0, 0.5, 1.0, 0.0);           // 位置
 const vec4 kamb = vec4(0.8, 0.8, 0.4, 1.0);         // 環境光の反射係数
 const vec4 kdiff = vec4(0.6, 0.6, 0.3, 1.0);        // 拡散反射係数
 const vec4 kspec = vec4(0.4, 0.4, 0.2, 1.0);        // 鏡面反射係数
-const float kshi = 50.0;                               // 輝き係数
+const float kshi = 50.0;                            // 輝き係数
+#endif
 
-// テクスチャのサンプラ
+#if !GRADIENT
+// 勾配／色テクスチャのサンプラ
+uniform sampler3D gradient;
+#endif
+
+// ボリュームテクスチャのサンプラ
 uniform sampler3D volume;
 
 // テクスチャ座標の変換行列
@@ -39,17 +49,20 @@ void main()
   // 濃度が閾値以下ならフラグメントを捨てる
   if (v <= 0.0) discard;
 
+#if GRADIENT
   // 濃度の勾配を求める
-  vec4 g = vec4(
+  vec3 g = vec3(
     textureOffset(volume, t, ivec3(-1, 0, 0)).r - textureOffset(volume, t, ivec3(1, 0, 0)).r,
     textureOffset(volume, t, ivec3(0, -1, 0)).r - textureOffset(volume, t, ivec3(0, 1, 0)).r,
-    textureOffset(volume, t, ivec3(0, 0, -1)).r - textureOffset(volume, t, ivec3(0, 0, 1)).r,
-    0.0
+    textureOffset(volume, t, ivec3(0, 0, -1)).r - textureOffset(volume, t, ivec3(0, 0, 1)).r
   );
+#else
+  vec3 g = texture(gradient, t).rgb * 2.0 - 1.0;
+#endif
 
-#if 1
+#if SHADING
   vec3 l = normalize((pl * p.w - p * pl.w).xyz);  // 光線ベクトル
-  vec3 n = normalize(g.xyz * mat3(mt));           // 法線ベクトル
+  vec3 n = normalize(g * mat3(mt));               // 法線ベクトル
   vec3 h = normalize(l - normalize(p.xyz));       // 中間ベクトル
 
   // 拡散反射光＋環境光の反射光
@@ -62,6 +75,6 @@ void main()
   fc = vec4((idiff + ispec).rgb, v);
 #else
   // 勾配をそのままフラグメントの色に使う
-  fc = vec4(normalize(g.xyz) * 0.5 + 0.5, v);
+  fc = vec4(normalize(g) * 0.5 + 0.5, v);
 #endif
 }
