@@ -45,7 +45,6 @@ const int slices(256);
 const int useSecondary(1);                              // 1 ならセカンダリモニタに表示
 const GLfloat initialParallax(0.032f);                  // 視差の初期値 (単位 m)
 const GLfloat parallaxStep(0.001f);                     // 視差の変更ステップ (単位 m)
-const GLfloat screenDistance(2.0f);                     // 実際のスクリーンまでの距離 (単位 m)
 
 // Oculus Rift 固有のパラメータ
 #  if STEREO == OCULUS
@@ -55,10 +54,10 @@ const GLuint fboWidth(1024), fboHeight(1024);           // 補正に使う FBO のサイ
 #  endif
 #endif
 
-// カメラの初期状態
+// カメラの初期状態 (単位 m)
 const GLfloat startPosition[] = { 0.0f, 0.0f, -2.0f };  // ボリュームデータの中心の初期位置
-const GLfloat displayCenter(0.5f);                      // ディスプレイの中心位置 (高さの半分
-const GLfloat displayDepth(1.5f);                       // 観測者とディスプレイ面との距離
+const GLfloat screenCenter(0.5f);                       // ディスプレイの中心位置 (高さの半分)
+const GLfloat screenDistance(1.5f);                     // 観測者とディスプレイ面との距離
 const GLfloat zNear(0.1f);                              // 前方面までの距離
 const GLfloat zFar(10.0f);                              // 後方面までの距離
 
