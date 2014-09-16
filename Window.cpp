@@ -375,15 +375,15 @@ void Window::swapBuffers()
   if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1))
   {
     // ボリュームデータの位置を移動する
-    ex -= speedScale * GLfloat(x - cx);
-    ez -= speedScale * GLfloat(y - cy);
+    ex -= speedScale * static_cast<GLfloat>(x - cx);
+    ez -= speedScale * static_cast<GLfloat>(y - cy);
   }
 
   // 右ボタンドラッグ
   if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2))
   {
     // トラックボール回転
-    tb.motion(GLfloat(x), GLfloat(y));
+    tb.motion(static_cast<GLfloat>(x), static_cast<GLfloat>(y));
   }
 
   // ゲームパッドによる操作
@@ -415,7 +415,7 @@ void Window::swapBuffers()
     if (btnsCount > 3)
     {
       // 閾値を調整する
-      const float t(threshold + GLfloat(btns[2] - btns[1]) * btnsScale);
+      const float t(threshold + static_cast<GLfloat>(btns[2] - btns[1]) * btnsScale);
       if (t >= 0.0f && t <= 1.0f) threshold = t;
     }
 
@@ -504,7 +504,7 @@ void Window::resize(GLFWwindow *window, int width, int height)
 
 #if STEREO != OCULUS
     // ディスプレイのアスペクト比 w / h からスクリーンの幅を求める
-    instance->scrW = instance->scrH * GLfloat(width) / GLfloat(height);
+    instance->scrW = instance->scrH * static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
 #endif
 
 #if STEREO == SIDEBYSIDE || STEREO == OCULUS
@@ -562,12 +562,12 @@ void Window::mouse(GLFWwindow *window, int button, int action, int mods)
       if (action)
       {
         // トラックボール処理開始
-        instance->tb.start(GLfloat(x), GLfloat(y));
+        instance->tb.start(static_cast<GLfloat>(x), static_cast<GLfloat>(y));
       }
       else
       {
         // トラックボール処理終了
-        instance->tb.stop(GLfloat(x), GLfloat(y));
+        instance->tb.stop(static_cast<GLfloat>(x), static_cast<GLfloat>(y));
       }
       break;
     case GLFW_MOUSE_BUTTON_3:
@@ -592,7 +592,7 @@ void Window::wheel(GLFWwindow *window, double x, double y)
   if (instance)
   {
     // ホイールの回転量をもとに閾値を求める
-    const GLfloat t = instance->threshold - threasholdStep * GLfloat(y);
+    const GLfloat t = instance->threshold - threasholdStep * static_cast<GLfloat>(y);
 
     //　閾値が [0, 1] の範囲内だったら保存している閾値を更新する
     if (t >= 0.0f && t <= 1.0f) instance->threshold = t;

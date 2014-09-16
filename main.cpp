@@ -65,14 +65,14 @@ namespace
 #if VOLUMETYPE == CHECKER
           texture.push_back(((i >> 4) + (j >> 4) + (k >> 4)) & 1 ? 0 : 255);
 #elif VOLUMETYPE == NOISE
-          texture.push_back(GLubyte(noise.noise(x, y, z) * 255.0));
+          texture.push_back(static_cast<GLubyte>(noise.noise(x, y, z) * 255.0));
 #elif VOLUMETYPE == PERLIN
-          texture.push_back(GLubyte(noise.perlin(x, y, z, 4, 0.5) * 255.0));
+          texture.push_back(static_cast<GLubyte>(noise.perlin(x, y, z, 4, 0.5) * 255.0));
 #elif VOLUMETYPE == TURBULENCE
-          texture.push_back(GLubyte(noise.turbulence(x, y, z, 4, 0.5) * 255.0));
+          texture.push_back(static_cast<GLubyte>(noise.turbulence(x, y, z, 4, 0.5) * 255.0));
 #elif VOLUMETYPE == SPHERE
           const double px(2.0 * x - 1.0), py(2.0 * y - 1.0), pz(2.0 * z - 1.0);
-          texture.push_back(GLubyte(255.0 - sqrt(px * px + py * py + pz * pz) * 127.5));
+          texture.push_back(static_cast<GLubyte>(255.0 - sqrt(px * px + py * py + pz * pz) * 127.5));
 #else
           texture.push_back(255);
 #endif
@@ -174,7 +174,7 @@ namespace
       glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex, 0, z);
       
       // 3D テクスチャをクリッピング空間を覆う矩形ポリゴンにマッピングしてレイヤに描画する
-      glUniform1f(zLoc, (GLfloat(z) + 0.5f) / GLfloat(depth));
+      glUniform1f(zLoc, (static_cast<GLfloat>(z) + 0.5f) / static_cast<GLfloat>(depth));
       glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     }
     
@@ -292,7 +292,7 @@ int main(int argc, const char * argv[])
     // シェーダの使用
     glUseProgram(program);
     glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getMt().get());
-    glUniform1f(spacingLoc, 1.0f / GLfloat(slices - 1));
+    glUniform1f(spacingLoc, 1.0f / static_cast<GLfloat>(slices - 1));
     glUniform1f(thresholdLoc, window.getThreshold());
 
     // 3D テクスチャのマッピング
