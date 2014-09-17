@@ -12,15 +12,15 @@
 
 // Oculus Rift SDK ライブラリ (LibOVR) の組み込み
 #if STEREO == OCULUS
-#  ifdef _WIN32
-#    ifdef _DEBUG
+#  if defined(_WIN32)
+#    if defined(_DEBUG)
 #      pragma comment(lib, "libovrd.lib")
 #    else
 #      pragma comment(lib, "libovr.lib")
 #    endif
 #    pragma comment(lib, "winmm.lib")
 #  endif
-#  ifdef APIENTRY
+#  if defined(APIENTRY)
 #    undef APIENTRY
 #  endif
 #  include <OVRVersion.h>
@@ -284,6 +284,8 @@ public:
   //
   // 左目用のモデルビュー変換行列を得る
   //
+  //   ・左目の描画特有の処理を行う
+  //
   GgMatrix getMwL() const;
 
   //
@@ -296,6 +298,8 @@ public:
 
   //
   // 右目用のモデルビュー変換行列を得る
+  //
+  //   ・右目の描画特有の処理を行う
   //
   GgMatrix getMwR() const;
 

@@ -4,11 +4,11 @@
 #include <iostream>
 #include "Window.h"
 
-// ジョイスティックを Mac につなぐと右側のスティックの番号が一つずれる
-#ifdef __APPLE__
-const int appleOffset(1);
+// Mac と Linux ではジョイスティックの右側のスティックの番号が一つずれる
+#if defined(_WIN32)
+const int axesOffset(0);
 #else
-const int appleOffset(0);
+const int axesOffset(1);
 #endif
 
 //
@@ -66,13 +66,13 @@ Window::Window(int width, int height, const char *title, GLFWmonitor *monitor, G
     int axesCount;
     const float *const axes(glfwGetJoystickAxes(joy, &axesCount));
 
-    if (axesCount > 3 + appleOffset)
+    if (axesCount > 3 + axesOffset)
     {
       // 起動直後のスティックの位置を基準にする
       origin[0] = axes[0];
       origin[1] = axes[1];
-      origin[2] = axes[2 + appleOffset];
-      origin[3] = axes[3 + appleOffset];
+      origin[2] = axes[2 + axesOffset];
+      origin[3] = axes[3 + axesOffset];
     }
   }
 
@@ -108,7 +108,7 @@ Window::Window(int width, int height, const char *title, GLFWmonitor *monitor, G
     && pHmd->GetDeviceInfo(&hmdInfo)
     )
   {
-#  ifdef _DEBUG
+#  if defined(_DEBUG)
     // 取得した情報を表示する
     std::cout << hmdInfo.DisplayDeviceName << std::endl;
     std::cout << "\nResolution:"
@@ -393,15 +393,15 @@ void Window::swapBuffers()
     int axesCount;
     const float *const axes(glfwGetJoystickAxes(joy, &axesCount));
 
-    if (axesCount > 3 + appleOffset)
+    if (axesCount > 3 + axesOffset)
     {
       // ボリュームデータの位置を移動する
       ex -= (axes[0] - origin[0]) * axesSpeedScale;
       ez -= (axes[1] - origin[1]) * axesSpeedScale;
 
       // ボリュームデータを回転する
-      const GLfloat dx(axes[2 + appleOffset] - origin[2]);
-      const GLfloat dy(axes[3 + appleOffset] - origin[3]);
+      const GLfloat dx(axes[2 + axesOffset] - origin[2]);
+      const GLfloat dy(axes[3 + axesOffset] - origin[3]);
       const GLfloat l = dx * dx + dy * dy;
       if (l > 0.0f)
       {
@@ -439,7 +439,7 @@ void Window::swapBuffers()
       parallax -= parallaxStep;
       updateStereoProjectionMatrix();
     }
-# else
+#  else
     // 視差を縮小する
     parallax -= parallaxStep;
     updateStereoProjectionMatrix();
@@ -461,7 +461,7 @@ void Window::swapBuffers()
       parallax += parallaxStep;
       updateStereoProjectionMatrix();
     }
-# else
+#  else
     // 視差を拡大する
     parallax += parallaxStep;
     updateStereoProjectionMatrix();
