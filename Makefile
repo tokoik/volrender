@@ -2,9 +2,11 @@ TARGET	= volrender
 SOURCES	= $(wildcard *.cpp)
 HEADERS	= $(wildcard *.h)
 OBJECTS	= $(patsubst %.cpp,%.o,$(SOURCES))
-LIBOVR  = /usr/local/LibOVR
-CXXFLAGS        = --std=c++0x -g -Wall -DX11 -I$(LIBOVR)/Include -Dnullptr=NULL -D_DEBUG
-LDLIBS  = -lGL -lglfw3 -lXi -lXinerama -lXrandr -lXxf86vm -lX11 -lrt -lpthread -ludev -lm -L$(LIBOVR)/Lib/Linux/Debug/i386 -lovr
+LIBOVR	= /usr/local/LibOVR
+DEBUG	= -g -D_DEBUG
+#DEBUG	= -O3
+CXXFLAGS	= --std=c++0x -Wall $(DEBUG) -Dnullptr=NULL -DX11 -I$(LIBOVR)/Include
+LDLIBS	= -lGL -lglfw3 -lXi -lXinerama -lXrandr -lXxf86vm -lX11 -lrt -lpthread -lm -ludev -L$(LIBOVR)/Lib/Linux/Debug/i386 -lovr
 
 .PHONY: clean
 
