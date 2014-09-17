@@ -4,6 +4,14 @@ volrender
 リアルタイムボリュームレンダリングの簡単なサンプルです．Oculus 
 Rift DK1 を使って眺めることもできます．
 
+Copyright (c) 2014 Kohe Tokoi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 ##ボリュームデータ
 ボリュームデータは CPU 側で作りました (main.cpp の makeVolume() 関数)．ボリュームのサイズが 32 × 32 × 32 だとデータの作成にあまり時間はかかりませんが，128 × 128 × 128 だと結構待たされます．GLSL にも noise 関数はあるので，それを使ってシェーダで作るべきなんでしょうけど，ここでは前述の以前作ったプログラムを流用しました．条件コンパイルってのは今風ではないんですけど，こらえてつかあさい．
 
