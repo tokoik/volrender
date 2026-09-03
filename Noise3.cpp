@@ -1,5 +1,5 @@
-//
-// OŸŒ³‚ÌƒmƒCƒYŠÖ”
+ï»¿//
+// ä¸‰æ¬¡å…ƒã®ãƒã‚¤ã‚ºé–¢æ•°
 //
 
 #include <math.h>
@@ -7,7 +7,7 @@
 
 #include "Noise3.h"
 
-// ƒf[ƒ^‚ÌÁ‹
+// ãƒ‡ãƒ¼ã‚¿ã®æ¶ˆå»
 void Noise3::erase()
 {
   if (p)
@@ -17,7 +17,7 @@ void Noise3::erase()
   }
 }
 
-// ƒf[ƒ^‚ÌƒRƒs[
+// ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼
 void Noise3::copy(const Noise3 &noise)
 {
   erase();
@@ -32,7 +32,7 @@ void Noise3::copy(const Noise3 &noise)
   }
 }
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^ (ß“_” n, m, l)
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ (ç¯€ç‚¹æ•° n, m, l)
 Noise3::Noise3(int n, int m, int l)
 {
   if (l > 0)
@@ -49,7 +49,7 @@ Noise3::Noise3(int n, int m, int l)
   }
 }
 
-// ‘ã“ü‰‰Zq
+// ä»£å…¥æ¼”ç®—å­
 Noise3 &Noise3::operator=(const Noise3 &noise)
 {
   if (&noise != this) copy(noise);
@@ -57,7 +57,7 @@ Noise3 &Noise3::operator=(const Noise3 &noise)
   return *this;
 }
 
-// (x, y, z) ‚É‚¨‚¯‚é•âŠÔ’l‚ğ‹‚ß‚é (0 … x … n, 0 … y … m, 0 … z … l)
+// (x, y, z) ã«ãŠã‘ã‚‹è£œé–“å€¤ã‚’æ±‚ã‚ã‚‹ (0 â‰¦ x â‰¦ n, 0 â‰¦ y â‰¦ m, 0 â‰¦ z â‰¦ l)
 double Noise3::noise(double x, double y, double z) const
 {
   const double lz(static_cast<double>(l) * (z - floor(z)));
@@ -77,7 +77,7 @@ double Noise3::noise(double x, double y, double z) const
     p[0]->noise(x, y), p[1]->noise(x, y), t);
 }
 
-// (x, y, z) ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Perlin ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+// (x, y, z) ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Perlin ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
 double Noise3::perlin(double x, double y, double z, int o, double a) const
 {
   double v(noise(x, y, z));
@@ -92,7 +92,7 @@ double Noise3::perlin(double x, double y, double z, int o, double a) const
   return v;
 }
 
-// (x, y, z) ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Turbulence ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+// (x, y, z) ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Turbulence ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
 double Noise3::turbulence(double x, double y, double z, int o, double a) const
 {
   double v(fabs(noise(x, y, z)));

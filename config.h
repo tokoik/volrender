@@ -1,75 +1,75 @@
-#pragma once
+ï»¿#pragma once
 
 //
-// Šeíİ’è
+// å„ç¨®è¨­å®š
 //
 
-// •â•ƒvƒƒOƒ‰ƒ€
+// è£œåŠ©ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 #include "gg.h"
 using namespace gg;
 
-// Œo‰ßŠÔ‚ğ•\¦‚·‚é‚È‚ç 1
+// çµŒéæ™‚é–“ã‚’è¡¨ç¤ºã™ã‚‹ãªã‚‰ 1
 #define BENCHMARK     0
 
-// 3D ƒeƒNƒXƒ`ƒƒ‚Ìƒpƒ^[ƒ“
+// 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¿ãƒ¼ãƒ³
 #define CHECKER       0
 #define SPHERE        1
 #define NOISE         2
 #define PERLIN        3
 #define TURBULENCE    4
 
-// g—p‚·‚é 3D ƒeƒNƒXƒ`ƒƒ‚Ìƒpƒ^[ƒ“
+// ä½¿ç”¨ã™ã‚‹ 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ã‚¿ãƒ¼ãƒ³
 #define VOLUMETYPE    TURBULENCE
 
-// 3D ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY
+// 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µã‚¤ã‚º
 const GLsizei texWidth(32);
 const GLsizei texHeight(32);
 const GLsizei texDepth(32);
 
-// ƒXƒ‰ƒCƒX”
+// ã‚¹ãƒ©ã‚¤ã‚¹æ•°
 const int slices(256);
 
-// —§‘Ì‹‚Ìİ’è
-#define NONE          0                                 // ’PŠá‹
-#define LINEBYLINE    1                                 // ƒCƒ“ƒ^[ƒŒ[ƒXi–¢ƒTƒ|[ƒgj
-#define TOPANDBOTTOM  2                                 // ã‰º
-#define SIDEBYSIDE    3                                 // ¶‰E
-#define QUADBUFFER    4                                 // ƒNƒƒbƒhƒoƒbƒtƒ@ƒXƒeƒŒƒI
+// ç«‹ä½“è¦–ã®è¨­å®š
+#define NONE          0                                 // å˜çœ¼è¦–
+#define LINEBYLINE    1                                 // ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ãƒ¼ã‚¹ï¼ˆæœªã‚µãƒãƒ¼ãƒˆï¼‰
+#define TOPANDBOTTOM  2                                 // ä¸Šä¸‹
+#define SIDEBYSIDE    3                                 // å·¦å³
+#define QUADBUFFER    4                                 // ã‚¯ãƒ¯ãƒƒãƒ‰ãƒãƒƒãƒ•ã‚¡ã‚¹ãƒ†ãƒ¬ã‚ª
 #define OCULUS        5                                 // Oculus Rift (HMD)
 
-// —§‘Ì‹‚Ì•û®
+// ç«‹ä½“è¦–ã®æ–¹å¼
 #define STEREO        NONE
 
-// —§‘Ì‹“Á—L‚Ìƒpƒ‰ƒ[ƒ^
+// ç«‹ä½“è¦–ç‰¹æœ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 #if STEREO != NONE
-const int useSecondary(1);                              // 1 ‚È‚çƒZƒJƒ“ƒ_ƒŠƒ‚ƒjƒ^‚É•\¦
-const GLfloat initialParallax(0.032f);                  // ‹·‚Ì‰Šú’l (’PˆÊ m)
-const GLfloat parallaxStep(0.001f);                     // ‹·‚Ì•ÏXƒXƒeƒbƒv (’PˆÊ m)
+const int useSecondary(1);                              // 1 ãªã‚‰ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒ¢ãƒ‹ã‚¿ã«è¡¨ç¤º
+const GLfloat initialParallax(0.032f);                  // è¦–å·®ã®åˆæœŸå€¤ (å˜ä½ m)
+const GLfloat parallaxStep(0.001f);                     // è¦–å·®ã®å¤‰æ›´ã‚¹ãƒ†ãƒƒãƒ— (å˜ä½ m)
 
-// Oculus Rift ŒÅ—L‚Ìƒpƒ‰ƒ[ƒ^
+// Oculus Rift å›ºæœ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 #  if STEREO == OCULUS
-const GLfloat lensScaleStep(0.001f);                    // ƒŒƒ“ƒY‚ÌŠg‘å—¦‚Ì•â³ŒW”‚Ì’²®ƒXƒeƒbƒv
-const GLfloat projectionCenterOffsetStep(0.001f);       // ƒŒƒ“ƒY‚Ì’†SˆÊ’u‚Ì’²®ƒXƒeƒbƒv
-const GLuint fboWidth(1024), fboHeight(1024);           // •â³‚Ég‚¤ FBO ‚ÌƒTƒCƒY
+const GLfloat lensScaleStep(0.001f);                    // ãƒ¬ãƒ³ã‚ºã®æ‹¡å¤§ç‡ã®è£œæ­£ä¿‚æ•°ã®èª¿æ•´ã‚¹ãƒ†ãƒƒãƒ—
+const GLfloat projectionCenterOffsetStep(0.001f);       // ãƒ¬ãƒ³ã‚ºã®ä¸­å¿ƒä½ç½®ã®èª¿æ•´ã‚¹ãƒ†ãƒƒãƒ—
+const GLuint fboWidth(1024), fboHeight(1024);           // è£œæ­£ã«ä½¿ã† FBO ã®ã‚µã‚¤ã‚º
 #  endif
 #endif
 
-// ƒJƒƒ‰‚Ì‰Šúó‘Ô (’PˆÊ m)
-const GLfloat startPosition[] = { 0.0f, 0.0f, -2.0f };  // ƒ{ƒŠƒ…[ƒ€ƒf[ƒ^‚Ì’†S‚Ì‰ŠúˆÊ’u
-const GLfloat screenCenter(0.5f);                       // ƒfƒBƒXƒvƒŒƒC‚Ì’†SˆÊ’u (‚‚³‚Ì”¼•ª)
-const GLfloat screenDistance(1.5f);                     // ŠÏ‘ªÒ‚ÆƒfƒBƒXƒvƒŒƒC–Ê‚Æ‚Ì‹——£
-const GLfloat zNear(0.1f);                              // ‘O•û–Ê‚Ü‚Å‚Ì‹——£
-const GLfloat zFar(10.0f);                              // Œã•û–Ê‚Ü‚Å‚Ì‹——£
+// ã‚«ãƒ¡ãƒ©ã®åˆæœŸçŠ¶æ…‹ (å˜ä½ m)
+const GLfloat startPosition[] = { 0.0f, 0.0f, -2.0f };  // ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã®ä¸­å¿ƒã®åˆæœŸä½ç½®
+const GLfloat screenCenter(0.5f);                       // ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã®ä¸­å¿ƒä½ç½® (é«˜ã•ã®åŠåˆ†)
+const GLfloat screenDistance(1.5f);                     // è¦³æ¸¬è€…ã¨ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤é¢ã¨ã®è·é›¢
+const GLfloat zNear(0.1f);                              // å‰æ–¹é¢ã¾ã§ã®è·é›¢
+const GLfloat zFar(10.0f);                              // å¾Œæ–¹é¢ã¾ã§ã®è·é›¢
 
-// ƒiƒrƒQ[ƒVƒ‡ƒ“‚Ì‘¬“x’²®
-const GLfloat speedScale(0.00005f);                     // ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌˆÚ“®‘¬“xŒW”
-const GLfloat threasholdStep(0.01f);                    // è‡’l‚Ì’²®ŒW”
-const GLfloat axesSpeedScale(0.01f);                    // ƒQ[ƒ€ƒpƒbƒh‚ÌƒXƒeƒBƒbƒN‚Ì‘¬“x‚ÌŒW”
-const GLfloat axesAngleScale(0.03f);                    // ƒQ[ƒ€ƒpƒbƒh‚ÌƒXƒeƒBƒbƒN‚ÌŠp‘¬“x‚ÌŒW”
-const GLfloat btnsScale(0.005f);                        // ƒQ[ƒ€ƒpƒbƒh‚Ìƒ{ƒ^ƒ“‚ÌŒW”
+// ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã®é€Ÿåº¦èª¿æ•´
+const GLfloat speedScale(0.00005f);                     // ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®ç§»å‹•é€Ÿåº¦ä¿‚æ•°
+const GLfloat threasholdStep(0.01f);                    // é–¾å€¤ã®èª¿æ•´ä¿‚æ•°
+const GLfloat axesSpeedScale(0.01f);                    // ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®é€Ÿåº¦ã®ä¿‚æ•°
+const GLfloat axesAngleScale(0.03f);                    // ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®è§’é€Ÿåº¦ã®ä¿‚æ•°
+const GLfloat btnsScale(0.005f);                        // ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒœã‚¿ãƒ³ã®ä¿‚æ•°
 
-// ‹«ŠEF (Oculus Rift •\¦‚Ì•\¦”ÍˆÍŠO‚ÌF)
+// å¢ƒç•Œè‰² (Oculus Rift è¡¨ç¤ºæ™‚ã®è¡¨ç¤ºç¯„å›²å¤–ã®è‰²)
 const GLfloat border[] = { 0.0, 0.0, 0.0, 0.0 };
 
-// ”wŒiF
+// èƒŒæ™¯è‰²
 const GLfloat back[] = { 0.2f, 0.3f, 0.4f, 0.0f };

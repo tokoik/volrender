@@ -1,16 +1,16 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-// Oculus Rift ‚ÌƒAƒXƒyƒNƒg”ä
+// Oculus Rift ã®ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
 uniform float ocuAspect;
 
-// Oculus Rift ‚ÌƒŒƒ“ƒY‚Ì’†S‚Ì‰æ–Ê‚Ì’†S‚©‚ç‚Ì‚¸‚ê
+// Oculus Rift ã®ãƒ¬ãƒ³ã‚ºã®ä¸­å¿ƒã®ç”»é¢ã®ä¸­å¿ƒã‹ã‚‰ã®ãšã‚Œ
 uniform float projectionCenterOffset;
 
-// ’¸“_‘®«
+// é ‚ç‚¹å±æ€§
 layout (location = 0) in vec4 pv;
 
-// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚É‘—‚é’¸“_‘®«
+// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã«é€ã‚‹é ‚ç‚¹å±æ€§
 out vec2 t;
 
 void main()

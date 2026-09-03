@@ -1,55 +1,47 @@
-#
-# for Linux
-#
-volrender
-a.out
-core
-*.o
-*.dep
-#
-# for Mac
-#
-/build/
-/DerivedData/
-xcuserdata
-*.pbxuser
-*.mode1v3
-*.mode2v3
-*.perspectivev3
-!default.pbxuser
-!default.mode1v3
-!default.mode2v3
-!default.perspectivev3
-*.moved-aside
-*.xcuserstate
-*.xccheckout
-.DS_Store
-#
-# for Windows
-#
+# Build directory
+build/
+bin/
+libs/
+
+# Visual Studio
 .vs/
-.vscode/
-/x64/
-/[Dd]ebug/
-/[Rr]elease/
-/ipch/
-/packages/
-*.com
-*.exe
-*.ncb
-*.suo
 *.user
-*.sdf
-*.opensdf
-*.opendb
-*.userosscache
+*.suo
 *.sln.docstates
-*.opendb
 *.db
-#
-# anothre stuff
-#
-*~
-*.bak
-*.tmp
-*.swp
+*.opendb
+*.VC.db
+*.sdf
+Debug/
+Release/
+x64/
+Win32/
+ipch/
+*.ilk
+*.pdb
+*.idb
+*.tlog
+
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+DerivedData/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+# Preserved assets
+!*.obj
+!*.mtl
+!*.tga
+!*.png
+!*.jpg
+!*.bmp
+!*.dat
+!*.csv
+!*.json
+!*.ttf
+!*.otf
+!*.lwo

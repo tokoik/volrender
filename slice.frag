@@ -1,56 +1,56 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-#define GRADIENT 1  // Œù”z‚ğ–‘OŒvZ‚µ‚È‚¢‚È‚ç 1
-#define SHADING  1  // ‰A‰e•t‚¯‚ğs‚¤‚È‚ç 1
+#define GRADIENT 1  // å‹¾é…ã‚’äº‹å‰è¨ˆç®—ã—ãªã„ãªã‚‰ 1
+#define SHADING  1  // é™°å½±ä»˜ã‘ã‚’è¡Œã†ãªã‚‰ 1
 
 #if SHADING
-// ŒõŒ¹
-const vec4 lamb = vec4(0.4, 0.4, 0.4, 1.0);         // ŠÂ‹«Œõ¬•ª
-const vec4 ldiff = vec4(0.8, 0.8, 0.8, 1.0);        // ŠgU”½ËŒõ¬•ª
-const vec4 lspec = vec4(0.8, 0.8, 0.8, 1.0);        // ‹¾–Ê”½ËŒõ¬•ª
-const vec4 pl = vec4(0.0, 0.5, 1.0, 0.0);           // ˆÊ’u
+// å…‰æº
+const vec4 lamb = vec4(0.4, 0.4, 0.4, 1.0);         // ç’°å¢ƒå…‰æˆåˆ†
+const vec4 ldiff = vec4(0.8, 0.8, 0.8, 1.0);        // æ‹¡æ•£åå°„å…‰æˆåˆ†
+const vec4 lspec = vec4(0.8, 0.8, 0.8, 1.0);        // é¡é¢åå°„å…‰æˆåˆ†
+const vec4 pl = vec4(0.0, 0.5, 1.0, 0.0);           // ä½ç½®
 
-// Ş¿
-const vec4 kamb = vec4(0.8, 0.8, 0.4, 1.0);         // ŠÂ‹«Œõ‚Ì”½ËŒW”
-const vec4 kdiff = vec4(0.6, 0.6, 0.3, 1.0);        // ŠgU”½ËŒW”
-const vec4 kspec = vec4(0.4, 0.4, 0.2, 1.0);        // ‹¾–Ê”½ËŒW”
-const float kshi = 50.0;                            // ‹P‚«ŒW”
+// æè³ª
+const vec4 kamb = vec4(0.8, 0.8, 0.4, 1.0);         // ç’°å¢ƒå…‰ã®åå°„ä¿‚æ•°
+const vec4 kdiff = vec4(0.6, 0.6, 0.3, 1.0);        // æ‹¡æ•£åå°„ä¿‚æ•°
+const vec4 kspec = vec4(0.4, 0.4, 0.2, 1.0);        // é¡é¢åå°„ä¿‚æ•°
+const float kshi = 50.0;                            // è¼ãä¿‚æ•°
 #endif
 
 #if !GRADIENT
-// Œù”z^FƒeƒNƒXƒ`ƒƒ‚ÌƒTƒ“ƒvƒ‰
+// å‹¾é…ï¼è‰²ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µãƒ³ãƒ—ãƒ©
 uniform sampler3D gradient;
 #endif
 
-// ƒ{ƒŠƒ…[ƒ€ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒ“ƒvƒ‰
+// ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µãƒ³ãƒ—ãƒ©
 uniform sampler3D volume;
 
-// ƒeƒNƒXƒ`ƒƒÀ•W‚Ì•ÏŠ·s—ñ
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®å¤‰æ›è¡Œåˆ—
 uniform mat4 mt;
 
-// è‡’l
+// é–¾å€¤
 uniform float threshold;
 
-// ƒXƒ‰ƒCƒX‚Ì•\–Êã‚ÌˆÊ’u
+// ã‚¹ãƒ©ã‚¤ã‚¹ã®è¡¨é¢ä¸Šã®ä½ç½®
 in vec4 p;
 
-// ƒeƒNƒXƒ`ƒƒÀ•W
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 in vec3 t;
 
-// ƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚Éo—Í‚·‚éƒf[ƒ^
+// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã«å‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
 layout (location = 0) out vec4 fc;
 
 void main()
 {
-  // Œ³‚Ìƒ{ƒŠƒ…[ƒ€‚Ì”Z“x‚Æè‡’l‚Ì·
+  // å…ƒã®ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®æ¿ƒåº¦ã¨é–¾å€¤ã®å·®
   float v = texture(volume, t).r - threshold;
 
-  // ”Z“x‚ªè‡’lˆÈ‰º‚È‚çƒtƒ‰ƒOƒƒ“ƒg‚ğÌ‚Ä‚é
+  // æ¿ƒåº¦ãŒé–¾å€¤ä»¥ä¸‹ãªã‚‰ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã‚’æ¨ã¦ã‚‹
   if (v <= 0.0) discard;
 
 #if GRADIENT
-  // ”Z“x‚ÌŒù”z‚ğ‹‚ß‚é
+  // æ¿ƒåº¦ã®å‹¾é…ã‚’æ±‚ã‚ã‚‹
   vec3 g = vec3(
     textureOffset(volume, t, ivec3(-1, 0, 0)).r - textureOffset(volume, t, ivec3(1, 0, 0)).r,
     textureOffset(volume, t, ivec3(0, -1, 0)).r - textureOffset(volume, t, ivec3(0, 1, 0)).r,
@@ -61,20 +61,20 @@ void main()
 #endif
 
 #if SHADING
-  vec3 l = normalize((pl * p.w - p * pl.w).xyz);  // ŒõüƒxƒNƒgƒ‹
-  vec3 n = normalize(g * mat3(mt));               // –@üƒxƒNƒgƒ‹
-  vec3 h = normalize(l - normalize(p.xyz));       // ’†ŠÔƒxƒNƒgƒ‹
+  vec3 l = normalize((pl * p.w - p * pl.w).xyz);  // å…‰ç·šãƒ™ã‚¯ãƒˆãƒ«
+  vec3 n = normalize(g * mat3(mt));               // æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+  vec3 h = normalize(l - normalize(p.xyz));       // ä¸­é–“ãƒ™ã‚¯ãƒˆãƒ«
 
-  // ŠgU”½ËŒõ{ŠÂ‹«Œõ‚Ì”½ËŒõ
+  // æ‹¡æ•£åå°„å…‰ï¼‹ç’°å¢ƒå…‰ã®åå°„å…‰
   vec4 idiff = max(dot(n, l), 0.0) * kdiff * ldiff + kamb * lamb;
 
-  // ‹¾–Ê”½ËŒõ
+  // é¡é¢åå°„å…‰
   vec4 ispec = pow(max(dot(n, h), 0.0), kshi) * kspec * lspec;
 
-  // ƒtƒ‰ƒOƒƒ“ƒg‚ÌF
+  // ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã®è‰²
   fc = vec4((idiff + ispec).rgb, v);
 #else
-  // Œù”z‚ğ‚»‚Ì‚Ü‚Üƒtƒ‰ƒOƒƒ“ƒg‚ÌF‚Ég‚¤
+  // å‹¾é…ã‚’ãã®ã¾ã¾ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã®è‰²ã«ä½¿ã†
   fc = vec4(normalize(g) * 0.5 + 0.5, v);
 #endif
 }

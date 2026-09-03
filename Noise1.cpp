@@ -1,12 +1,12 @@
-//
-// ˆêŸŒ³‚ÌƒmƒCƒYŠÖ”
+ï»¿//
+// ä¸€æ¬¡å…ƒã®ãƒã‚¤ã‚ºé–¢æ•°
 //
 
 #include <math.h>
 
 #include "Noise1.h"
 
-// 3 Ÿ Catmull-Rom Spline •âŠÔ
+// 3 æ¬¡ Catmull-Rom Spline è£œé–“
 double catmull_rom(double x0, double x1, double x2, double x3, double t)
 {
   const double v1((x2 - x0) * 0.5), v2((x3 - x1) * 0.5);
@@ -16,7 +16,7 @@ double catmull_rom(double x0, double x1, double x2, double x3, double t)
     + v1) * t + x1;
 }
 
-// ˆê—l—””­¶ (Xorshift –@)
+// ä¸€æ§˜ä¹±æ•°ç™ºç”Ÿ (Xorshift æ³•)
 double xor128()
 {
   static unsigned int x(123456789);
@@ -33,7 +33,7 @@ double xor128()
   return double(w ^= w >> 19 ^ t ^ t >> 8) * 0.0000000002328306437080797375;
 }
 
-// ƒf[ƒ^‚ÌƒRƒs[
+// ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼
 void Noise1::copy(const Noise1 &noise)
 {
   delete[] p;
@@ -45,7 +45,7 @@ void Noise1::copy(const Noise1 &noise)
     p[i] = noise.p[i];
 }
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^ (ß“_” n)
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ (ç¯€ç‚¹æ•° n)
 Noise1::Noise1(int n)
 {
   if (n > 0)
@@ -62,7 +62,7 @@ Noise1::Noise1(int n)
   }
 }
 
-// ‘ã“ü‰‰Zq
+// ä»£å…¥æ¼”ç®—å­
 Noise1 &Noise1::operator=(const Noise1 &noise)
 {
   if (&noise != this) copy(noise);
@@ -70,7 +70,7 @@ Noise1 &Noise1::operator=(const Noise1 &noise)
   return *this;
 }
 
-// x ‚É‚¨‚¯‚é•âŠÔ’l‚ğ‹‚ß‚é (0 … x … n)
+// x ã«ãŠã‘ã‚‹è£œé–“å€¤ã‚’æ±‚ã‚ã‚‹ (0 â‰¦ x â‰¦ n)
 double Noise1::noise(double x) const
 {
   const double nx(static_cast<double>(n) * (x - floor(x)));
@@ -86,7 +86,7 @@ double Noise1::noise(double x) const
   return catmull_rom(p[n - 2], p[n - 1], p[0], p[1], t);
 }
 
-// x ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Perlin ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+// x ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Perlin ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
 double Noise1::perlin(double x, int o, double a) const
 {
   double v(noise(x));
@@ -101,7 +101,7 @@ double Noise1::perlin(double x, int o, double a) const
   return v;
 }
 
-// x ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Turbulence ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+// x ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Turbulence ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
 double Noise1::turbulence(double x, int o, double a) const
 {
   double v(fabs(noise(x)));

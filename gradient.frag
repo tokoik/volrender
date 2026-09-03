@@ -1,13 +1,13 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-// ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒ“ƒvƒ‰
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µãƒ³ãƒ—ãƒ©
 uniform sampler3D tex;
 
-// ƒeƒNƒXƒ`ƒƒÀ•W
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 in vec3 t;
 
-// ƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚Éo—Í‚·‚éƒf[ƒ^
+// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã«å‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
 layout (location = 0) out vec4 fc;
 
 void main(void)
@@ -18,6 +18,6 @@ void main(void)
     textureOffset(tex, t, ivec3(0, 0, -1)).r - textureOffset(tex, t, ivec3(0, 0, 1)).r
   );
 
-  // ƒtƒ‰ƒOƒƒ“ƒg‚ÉŒù”z‚ğŠi”[‚·‚é
+  // ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã«å‹¾é…ã‚’æ ¼ç´ã™ã‚‹
   fc = vec4(normalize(g) * 0.5 + 0.5, length(g));
 }

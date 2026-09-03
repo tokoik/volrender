@@ -1,38 +1,38 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-// �e�N�X�`�����W�̕ϊ��s��
+// テクスチャ座標の変換行列
 uniform mat4 mt;
 
-// ���f���r���[�ϊ��s��
+// モデルビュー変換行列
 uniform mat4 mw;
 
-// �v���W�F�N�V�����ϊ��s��
+// プロジェクション変換行列
 uniform mat4 mp;
 
-// �X���C�X�̊Ԋu
+// スライスの間隔
 uniform float spacing;
 
-// [-0.5, 0.5] �̐����`�̒��_�ʒu
+// [-0.5, 0.5] の正方形の頂点位置
 layout (location = 0) in vec2 pv;
 
-// �X���C�X�̒��_�ʒu
+// スライスの頂点位置
 out vec4 p;
 
-// �X���C�X�̃e�N�X�`�����W
+// スライスのテクスチャ座標
 out vec3 t;
 
 void main()
 {
-  // �X���C�X�� gl_InstanceID �ł��炷
+  // スライスを gl_InstanceID でずらす
   p = vec4(pv, (float(gl_InstanceID) + 0.5) * spacing - 0.5, 1.0);
 
-  // �X���C�X�̃e�N�X�`�����W�̓X���C�X�̒��S����� ��3 �{�Ɋg�債�Ă����]����
+  // スライスのテクスチャ座標はスライスの中心を基準に √3 倍に拡大してから回転する
   t = (mat3(mt) * p.xyz) * 1.732 + 0.5;
 
-  // ���_�ʒu�����_���W�n�Ɉڂ�
+  // 頂点位置を視点座標系に移す
   p = mw * p;
 
-  // ���f���r���[�v���W�F�N�V�����ϊ������Ă��烉�X�^���C�U�ɑ���
+  // モデルビュープロジェクション変換をしてからラスタライザに送る
   gl_Position = mp * p;
 }

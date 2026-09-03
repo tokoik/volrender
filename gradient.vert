@@ -1,13 +1,13 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-// ƒŒƒCƒ„‚ÌˆÊ’u
+// ãƒ¬ã‚¤ãƒ¤ã®ä½ç½®
 uniform float z;
 
-// ’¸“_‘®«
+// é ‚ç‚¹å±æ€§
 layout (location = 0) in vec2 pv;
 
-// ƒXƒ‰ƒCƒX‚ÌƒeƒNƒXƒ`ƒƒÀ•W
+// ã‚¹ãƒ©ã‚¤ã‚¹ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 out vec3 t;
 
 void main(void)

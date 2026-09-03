@@ -1,20 +1,20 @@
 #version 150 core
 #extension GL_ARB_explicit_attrib_location : enable
 
-// ƒeƒNƒXƒ`ƒƒ
+// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 uniform sampler2D ocuFboColor;
 
-// ƒŒƒ“ƒY‚Ì˜c‚İ‚Ì•â³ŒW”
+// ãƒ¬ãƒ³ã‚ºã®æ­ªã¿ã®è£œæ­£ä¿‚æ•°
 uniform vec4 lensDistortion;
 
-// ƒŒƒ“ƒY‚ÌŠg‘åk‚Ì•â³ŒW”
+// ãƒ¬ãƒ³ã‚ºã®æ‹¡å¤§ç¸®ã®è£œæ­£ä¿‚æ•°
 uniform float lensScale;
 
-// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚©‚çó‚¯æ‚é’¸“_‘®«‚Ì•âŠÔ’l
-in vec2 t;                                          // ƒeƒNƒXƒ`ƒƒÀ•W
+// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‹ã‚‰å—ã‘å–ã‚‹é ‚ç‚¹å±æ€§ã®è£œé–“å€¤
+in vec2 t;                                          // ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 
-// ƒtƒŒ[ƒ€ƒoƒbƒtƒ@‚Éo—Í‚·‚éƒf[ƒ^
-layout (location = 0) out vec4 fc;                  // ƒtƒ‰ƒOƒƒ“ƒg‚ÌF
+// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã«å‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
+layout (location = 0) out vec4 fc;                  // ãƒ•ãƒ©ã‚°ãƒ¡ãƒ³ãƒˆã®è‰²
 
 void main()
 {
@@ -27,7 +27,7 @@ void main()
   vec2 tc = t * dot(r, lensDistortion);
   fc = texture(ocuFboColor, tc * lensScale * 0.5 + 0.5);
 #else
-  // Fû·•â³‚ÌƒeƒXƒg
+  // è‰²åå·®è£œæ­£ã®ãƒ†ã‚¹ãƒˆ
   vec2 tr = t * dot(r, lensDistortion);
   vec2 tg = t * dot(r, lensDistortion - vec4(0.0, 0.02, 0.024, 0.0));
   vec2 tb = t * dot(r, lensDistortion - vec4(0.0, 0.04, 0.048, 0.0));

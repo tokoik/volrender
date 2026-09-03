@@ -1,5 +1,5 @@
-//
-// “ñŸŒ³‚ÌƒmƒCƒYŠÖ”
+ï»¿//
+// äºŒæ¬¡å…ƒã®ãƒã‚¤ã‚ºé–¢æ•°
 //
 
 #include <math.h>
@@ -7,7 +7,7 @@
 
 #include "Noise2.h"
 
-// ƒf[ƒ^‚ÌÁ‹
+// ãƒ‡ãƒ¼ã‚¿ã®æ¶ˆå»
 void Noise2::erase()
 {
   if (p)
@@ -17,7 +17,7 @@ void Noise2::erase()
   }
 }
 
-// ƒf[ƒ^‚ÌƒRƒs[
+// ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼
 void Noise2::copy(const Noise2 &noise)
 {
   erase();
@@ -32,7 +32,7 @@ void Noise2::copy(const Noise2 &noise)
   }
 }
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^ (ß“_” n, m)
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ (ç¯€ç‚¹æ•° n, m)
 Noise2::Noise2(int n, int m)
 {
   if (m > 0)
@@ -49,7 +49,7 @@ Noise2::Noise2(int n, int m)
   }
 }
 
-// ‘ã“ü‰‰Zq
+// ä»£å…¥æ¼”ç®—å­
 Noise2 &Noise2::operator=(const Noise2 &noise)
 {
   if (&noise != this) copy(noise);
@@ -57,7 +57,7 @@ Noise2 &Noise2::operator=(const Noise2 &noise)
   return *this;
 }
 
-// (x, y) ‚É‚¨‚¯‚é•âŠÔ’l‚ğ‹‚ß‚é (0 … x … n, 0 … y … m)
+// (x, y) ã«ãŠã‘ã‚‹è£œé–“å€¤ã‚’æ±‚ã‚ã‚‹ (0 â‰¦ x â‰¦ n, 0 â‰¦ y â‰¦ m)
 double Noise2::noise(double x, double y) const
 {
   const double my(static_cast<double>(m) * (y - floor(y)));
@@ -77,7 +77,7 @@ double Noise2::noise(double x, double y) const
     p[0]->noise(x), p[1]->noise(x), t);
 }
 
-// (x, y) ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Perlin ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+// (x, y) ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Perlin ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
 double Noise2::perlin(double x, double y, int o, double a) const
 {
   double v(noise(x, y));
@@ -92,7 +92,7 @@ double Noise2::perlin(double x, double y, int o, double a) const
   return v;
 }
 
-// (x, y) ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Turbulence ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+// (x, y) ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Turbulence ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
 double Noise2::turbulence(double x, double y, int o, double a) const
 {
   double v(fabs(noise(x, y)));

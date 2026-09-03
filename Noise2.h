@@ -1,40 +1,40 @@
-#pragma once
+ï»¿#pragma once
 //
-// “ñŸŒ³‚ÌƒmƒCƒYŠÖ”
+// äºŒæ¬¡å…ƒã®ãƒã‚¤ã‚ºé–¢æ•°
 //
 
 #include "Noise1.h"
 
-// “ñŸŒ³‚ÌƒmƒCƒYŠÖ”
+// äºŒæ¬¡å…ƒã®ãƒã‚¤ã‚ºé–¢æ•°
 class Noise2
 {
-  int m;                                          // ß“_”
-  Noise1 **p;                                     // Šeß“_‚Ì’l
-  void erase();                               // ƒf[ƒ^‚ÌÁ‹
-  void copy(const Noise2 &noise);                 // ƒf[ƒ^‚ÌƒRƒs[
+  int m;                                          // ç¯€ç‚¹æ•°
+  Noise1 **p;                                     // å„ç¯€ç‚¹ã®å€¤
+  void erase();                               // ãƒ‡ãƒ¼ã‚¿ã®æ¶ˆå»
+  void copy(const Noise2 &noise);                 // ãƒ‡ãƒ¼ã‚¿ã®ã‚³ãƒ”ãƒ¼
 
 public:
 
-  // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+  // ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
   Noise2() { p = 0; }
   Noise2(int n, int m);
   Noise2(const Noise2 &noise) { copy(noise); }
 
-  // ƒfƒXƒgƒ‰ƒNƒ^
+  // ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
   virtual ~Noise2() { erase(); }
 
-  // ‘ã“ü‰‰Zq
+  // ä»£å…¥æ¼”ç®—å­
   Noise2 &operator=(const Noise2 &noise);
 
-  // ß“_ (i, j) ‚Ì’l‚ğ“¾‚é
+  // ç¯€ç‚¹ (i, j) ã®å€¤ã‚’å¾—ã‚‹
   double point(int i, int j) const { return p[j]->point(i); }
 
-  // (x, y) ‚É‚¨‚¯‚é•âŠÔ’l‚ğ‹‚ß‚é (0 … x … n, 0 … y … m)
+  // (x, y) ã«ãŠã‘ã‚‹è£œé–“å€¤ã‚’æ±‚ã‚ã‚‹ (0 â‰¦ x â‰¦ n, 0 â‰¦ y â‰¦ m)
   double noise(double x, double y) const;
 
-  // (x, y) ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Perlin ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+  // (x, y) ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Perlin ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
   double perlin(double p, double q, int o, double a) const;
 
-  // (x, y) ‚É‚¨‚¯‚é o ƒIƒNƒ^[ƒu‚Ì Turbulence ƒmƒCƒY‚ğ‹‚ß‚é (ƒIƒNƒ^[ƒuŠÔ‚ÌŒ¸Š—¦ a)
+  // (x, y) ã«ãŠã‘ã‚‹ o ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã® Turbulence ãƒã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ (ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–é–“ã®æ¸›è¡°ç‡ a)
   double turbulence(double x, double y, int o, double a) const;
 };

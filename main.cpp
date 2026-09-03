@@ -1,37 +1,37 @@
-// •W€ƒ‰ƒCƒuƒ‰ƒŠ
+ï»¿// æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
 #include <vector>
 
-// ƒmƒCƒY
+// ãƒã‚¤ã‚º
 #include "Noise3.h"
 
-// ƒEƒBƒ“ƒhƒEŠÖ˜A‚Ìˆ—
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–¢é€£ã®å‡¦ç†
 #include "Window.h"
 
 namespace
 {
   //
-  // ƒXƒ‰ƒCƒX‚Ìì¬
+  // ã‚¹ãƒ©ã‚¤ã‚¹ã®ä½œæˆ
   //
   GLuint makeSlice()
   {
-    // ’¸“_”z—ñƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚ÄŒ‹‡‚·‚é
+    // é ‚ç‚¹é…åˆ—ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¦çµåˆã™ã‚‹
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    // ’¸“_ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚ÄŒ‹‡‚·‚é
+    // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¦çµåˆã™ã‚‹
     GLuint vbo;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    // ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ğŠm•Û‚·‚é
+    // ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç¢ºä¿ã™ã‚‹
     static const GLfloat p[] = { -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f };
     glBufferData(GL_ARRAY_BUFFER, sizeof p, p, GL_STATIC_DRAW);
 
-    // ’¸“_ˆÊ’u‚Í index == 0 ‚Ì in •Ï”‚©‚ç“¾‚é
+    // é ‚ç‚¹ä½ç½®ã¯ index == 0 ã® in å¤‰æ•°ã‹ã‚‰å¾—ã‚‹
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(0);
 
@@ -39,17 +39,17 @@ namespace
   }
 
   //
-  // ƒ{ƒŠƒ…[ƒ€ƒf[ƒ^‚Ìì¬
+  // ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
   //
   GLuint makeVolume(GLint width, GLint height, GLint depth)
   {
-    // ì‹Æ—pƒƒ‚ƒŠ
+    // ä½œæ¥­ç”¨ãƒ¡ãƒ¢ãƒª
     std::vector<GLubyte> texture;
 
-    // ƒmƒCƒYŠÖ”‚ğ‰Šú‰»‚·‚é
+    // ãƒã‚¤ã‚ºé–¢æ•°ã‚’åˆæœŸåŒ–ã™ã‚‹
     const Noise3 noise(5, 5, 5);
 
-    // ƒmƒCƒYŠÖ”‚ğg‚Á‚ÄƒeƒNƒXƒ`ƒƒ‚ğì‚é
+    // ãƒã‚¤ã‚ºé–¢æ•°ã‚’ä½¿ã£ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹
     for (GLint k = 0; k < depth; ++k)
     {
       const double z(double(k) / double(depth - 1));
@@ -80,25 +80,25 @@ namespace
       }
     }
 
-    // ƒeƒNƒXƒ`ƒƒƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚ÄŒ‹‡‚·‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¦çµåˆã™ã‚‹
     GLuint tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_3D, tex);
 
-    // ƒeƒNƒXƒ`ƒƒ‚ğŠ„‚è“–‚Ä‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‰²ã‚Šå½“ã¦ã‚‹
     glTexImage3D(GL_TEXTURE_3D, 0, GL_R8, width, height, depth, 0,
       GL_RED, GL_UNSIGNED_BYTE, &texture[0]);
 
-    // ƒeƒNƒXƒ`ƒƒ‚ÌŠg‘åEk¬‚ÉüŒ`•âŠÔ‚ğ—p‚¢‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æ‹¡å¤§ãƒ»ç¸®å°ã«ç·šå½¢è£œé–“ã‚’ç”¨ã„ã‚‹
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    // ƒeƒNƒXƒ`ƒƒ‚©‚ç‚Í‚İo‚½•”•ª‚É‚Í‹«ŠEF‚ğ—p‚¢‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‹ã‚‰ã¯ã¿å‡ºãŸéƒ¨åˆ†ã«ã¯å¢ƒç•Œè‰²ã‚’ç”¨ã„ã‚‹
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
 
-    // ƒeƒNƒXƒ`ƒƒ‚Ì‹«ŠEF‚ğİ’è‚·‚é (ƒ{ƒŠƒ…[ƒ€‚ÌŠO‚É‚Í‰½‚à‚È‚¢)
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å¢ƒç•Œè‰²ã‚’è¨­å®šã™ã‚‹ (ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®å¤–ã«ã¯ä½•ã‚‚ãªã„)
     static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, black);
 
@@ -106,125 +106,125 @@ namespace
   }
 
   //
-  // Œù”z‚Ì–‘OŒvZ
+  // å‹¾é…ã®äº‹å‰è¨ˆç®—
   //
   GLuint makeGradient(GLuint vao, GLuint volume, GLint width, GLint height, GLint depth)
   {
-    // ƒeƒNƒXƒ`ƒƒƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚ÄŒ‹‡‚·‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¦çµåˆã™ã‚‹
     GLuint tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_3D, tex);
     
-    // ƒeƒNƒXƒ`ƒƒ‚ğŠ„‚è“–‚Ä‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’å‰²ã‚Šå½“ã¦ã‚‹
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, width, height, depth, 0,
       GL_RGBA, GL_UNSIGNED_BYTE, 0);
     
-    // ƒeƒNƒXƒ`ƒƒ‚ÌŠg‘åEk¬‚ÉüŒ`•âŠÔ‚ğ—p‚¢‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æ‹¡å¤§ãƒ»ç¸®å°ã«ç·šå½¢è£œé–“ã‚’ç”¨ã„ã‚‹
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     
-    // Œù”z‚Í‹«ŠEF‚É‰e‹¿‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
+    // å‹¾é…ã¯å¢ƒç•Œè‰²ã«å½±éŸ¿ã•ã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     
-    // ƒeƒNƒXƒ`ƒƒ‚ÌŒ‹‡‚ğ‰ğœ‚·‚é
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®çµåˆã‚’è§£é™¤ã™ã‚‹
     glBindTexture(GL_TEXTURE_3D, 0);
     
-    // Œ»İ‚Ìƒrƒ…[ƒ|[ƒg‚ğ•Û‘¶‚·‚é
+    // ç¾åœ¨ã®ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’ä¿å­˜ã™ã‚‹
     GLint vp[4];
     glGetIntegerv(GL_VIEWPORT, vp);
     
-    // ƒrƒ…[ƒ|[ƒg‚ğƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ÌƒTƒCƒY‚É‡‚í‚¹‚é
+    // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹
     glViewport(0, 0, width, height);
     
-    // ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚Ä‚»‚±‚É•`‰æ‚·‚é
+    // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã—ã¦ãã“ã«æç”»ã™ã‚‹
     GLuint fb;
     glGenFramebuffers(1, &fb);
     glBindFramebuffer(GL_FRAMEBUFFER, fb);
     
-    // •`‰æ‚Í GL_COLOR_ATTACHIMENT0 ‚És‚¤
+    // æç”»ã¯ GL_COLOR_ATTACHIMENT0 ã«è¡Œã†
     static const GLenum bufs[] = { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers(1, bufs);
     
-    // ƒfƒvƒXƒoƒbƒtƒ@‚É‚Í•`‰æ‚µ‚È‚¢
+    // ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã«ã¯æç”»ã—ãªã„
     glDepthMask(GL_FALSE);
     
-    // ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒfƒBƒ“ƒO‚Ís‚í‚È‚¢
+    // ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã¯è¡Œã‚ãªã„
     glDisable(GL_BLEND);
     
-    // ƒVƒF[ƒ_ƒvƒƒOƒ‰ƒ€‚ğì¬‚·‚é
+    // ã‚·ã‚§ãƒ¼ãƒ€ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’ä½œæˆã™ã‚‹
     GLuint program = ggLoadShader("gradient.vert", "gradient.frag");
     GLint texLoc = glGetUniformLocation(program, "tex");
     GLint zLoc = glGetUniformLocation(program, "z");
     
-    // ƒVƒF[ƒ_‚Ìg—p‚ğŠJn‚·‚é
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ä½¿ç”¨ã‚’é–‹å§‹ã™ã‚‹
     glUseProgram(program);
     glUniform1i(texLoc, 0);
     
-    // 3D ƒeƒNƒXƒ`ƒƒ‚ğƒ}ƒbƒsƒ“ƒO‚·‚é
+    // 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°ã™ã‚‹
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_3D, volume);
     
-    // ƒŒƒCƒ„‚²‚Æ‚É•`‰æ‚·‚é
+    // ãƒ¬ã‚¤ãƒ¤ã”ã¨ã«æç”»ã™ã‚‹
     glBindVertexArray(vao);
     for (GLint z = 0; z < depth; ++z)
     {
-      // ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚ÉƒJƒ‰[ƒoƒbƒtƒ@‚Æ‚µ‚ÄƒAƒŒƒCƒeƒNƒXƒ`ƒƒ‚ÌƒŒƒCƒ„‚ğŒ‹‡‚·‚é
+      // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦ã‚¢ãƒ¬ã‚¤ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ¬ã‚¤ãƒ¤ã‚’çµåˆã™ã‚‹
       glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, tex, 0, z);
       
-      // 3D ƒeƒNƒXƒ`ƒƒ‚ğƒNƒŠƒbƒsƒ“ƒO‹óŠÔ‚ğ•¢‚¤‹éŒ`ƒ|ƒŠƒSƒ“‚Éƒ}ƒbƒsƒ“ƒO‚µ‚ÄƒŒƒCƒ„‚É•`‰æ‚·‚é
+      // 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ç©ºé–“ã‚’è¦†ã†çŸ©å½¢ãƒãƒªã‚´ãƒ³ã«ãƒãƒƒãƒ”ãƒ³ã‚°ã—ã¦ãƒ¬ã‚¤ãƒ¤ã«æç”»ã™ã‚‹
       glUniform1f(zLoc, (static_cast<GLfloat>(z) + 0.5f) / static_cast<GLfloat>(depth));
       glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     }
     
-    // ƒtƒŒ[ƒ€ƒoƒbƒtƒ@ƒIƒuƒWƒFƒNƒg‚Ö‚Ì•`‰æ‚ğI—¹‚µ‚Ä’Êí‚Ì•`‰æ‚É–ß‚·
+    // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®æç”»ã‚’çµ‚äº†ã—ã¦é€šå¸¸ã®æç”»ã«æˆ»ã™
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
-    // ƒoƒbƒNƒoƒbƒtƒ@‚É•`‰æ‚·‚é
+    // ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã«æç”»ã™ã‚‹
     glDrawBuffer(GL_BACK);
     
-    // ƒfƒvƒXƒoƒbƒtƒ@‚Ö‚Ì‘‚«‚İ‚ğ‹–‰Â‚·‚é
+    // ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®æ›¸ãè¾¼ã¿ã‚’è¨±å¯ã™ã‚‹
     glDepthMask(GL_TRUE);
     
-    // ƒrƒ…[ƒ|[ƒg‚ğ•œ‹A‚·‚é
+    // ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’å¾©å¸°ã™ã‚‹
     glViewport(vp[0], vp[1], vp[2], vp[3]);
     
     return tex;
   }
 
   //
-  // I—¹ˆ—
+  // çµ‚äº†å‡¦ç†
   //
   void cleanup()
   {
-    // GLFW ‚ÌI—¹ˆ—
+    // GLFW ã®çµ‚äº†å‡¦ç†
     glfwTerminate();
   }
 }
 
 //
-// ƒƒCƒ“ƒvƒƒOƒ‰ƒ€
+// ãƒ¡ã‚¤ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 //
 int main(int argc, const char * argv[])
 {
-  // GLFW ‚ğ‰Šú‰»‚·‚é
+  // GLFW ã‚’åˆæœŸåŒ–ã™ã‚‹
   if (glfwInit() == GL_FALSE)
   {
-    // GLFW ‚Ì‰Šú‰»‚É¸”s‚µ‚½
+    // GLFW ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ãŸ
     std::cerr << "Can't initialize GLFW" << std::endl;
     return EXIT_FAILURE;
   }
 
-  // ƒvƒƒOƒ‰ƒ€I—¹‚Ìˆ—‚ğ“o˜^‚·‚é
+  // ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†æ™‚ã®å‡¦ç†ã‚’ç™»éŒ²ã™ã‚‹
   atexit(cleanup);
 
 #if STEREO == OCULUS
-  // Oculus Rift (LibOVR) ‚ğ‰Šú‰»‚·‚é
+  // Oculus Rift (LibOVR) ã‚’åˆæœŸåŒ–ã™ã‚‹
   System::Init(Log::ConfigureDefaultLog(LogMask_All));
 #endif
 
-  // OpenGL Version 3.2 Core Profile ‚ğ‘I‘ğ‚·‚é
+  // OpenGL Version 3.2 Core Profile ã‚’é¸æŠã™ã‚‹
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -232,20 +232,20 @@ int main(int argc, const char * argv[])
   glfwWindowHint(GLFW_STEREO, STEREO == QUADBUFFER);
 
 #if STEREO != NONE && !defined(_DEBUG)
-  // Ú‘±‚³‚ê‚Ä‚¢‚éƒ‚ƒjƒ^‚ğ‘{‚·
+  // æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ãƒ¢ãƒ‹ã‚¿ã‚’æœã™
   int mcount;
   GLFWmonitor **const monitors = glfwGetMonitors(&mcount);
 
-  // ƒZƒJƒ“ƒ_ƒŠƒ‚ƒjƒ^‚ª‚ ‚ê‚Î‚»‚ê‚ğg‚¤
+  // ã‚»ã‚«ãƒ³ãƒ€ãƒªãƒ¢ãƒ‹ã‚¿ãŒã‚ã‚Œã°ãã‚Œã‚’ä½¿ã†
   GLFWmonitor *const monitor(monitors[mcount > 1 ? useSecondary : 0]);
 
-  // ƒ‚ƒjƒ^‚Ìƒ‚[ƒh‚ğ’²‚×‚é
+  // ãƒ¢ãƒ‹ã‚¿ã®ãƒ¢ãƒ¼ãƒ‰ã‚’èª¿ã¹ã‚‹
   const GLFWvidmode* mode(glfwGetVideoMode(monitor));
 
-  // ƒtƒ‹ƒXƒNƒŠ[ƒ“‚ÅƒEƒBƒ“ƒhƒE‚ğŠJ‚­
+  // ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã
   Window window(mode->width, mode->height, "Volume Rendering (STEREO)", monitor);
 #else
-  // ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚ÅƒEƒBƒ“ƒhƒE‚ğŠJ‚­
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã
   Window window(1280, 800, "Volume Rendering");
 #endif
   if (!window.get())
@@ -254,16 +254,16 @@ int main(int argc, const char * argv[])
     exit(1);
   }
 
-  // ƒXƒ‰ƒCƒX‚Ìì¬
+  // ã‚¹ãƒ©ã‚¤ã‚¹ã®ä½œæˆ
   const GLuint slice(makeSlice());
 
-  // 3D ƒeƒNƒXƒ`ƒƒ‚Ìì¬
+  // 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ä½œæˆ
   const GLuint volume(makeVolume(texWidth, texHeight, texDepth));
 
-  // Œù”zƒeƒNƒXƒ`ƒƒ‚Ìì¬
+  // å‹¾é…ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ä½œæˆ
   const GLuint gradient(makeGradient(slice, volume, texWidth, texHeight, texDepth));
 
-  // ƒVƒF[ƒ_
+  // ã‚·ã‚§ãƒ¼ãƒ€
   const GLuint program(ggLoadShader("slice.vert", "slice.frag"));
   const GLint gradientLoc(glGetUniformLocation(program, "gradient"));
   const GLint volumeLoc(glGetUniformLocation(program, "volume"));
@@ -273,29 +273,29 @@ int main(int argc, const char * argv[])
   const GLint spacingLoc(glGetUniformLocation(program, "spacing"));
   const GLint thresholdLoc(glGetUniformLocation(program, "threshold"));
 
-  // ‰B–ÊÁ‹‚Ís‚í‚È‚¢
+  // éš é¢æ¶ˆå»ã¯è¡Œã‚ãªã„
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
 
-  // ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒfƒBƒ“ƒO‚Ì•û–@‚ğİ’è‚·‚é
+  // ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã®æ–¹æ³•ã‚’è¨­å®šã™ã‚‹
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  // ”wŒiF‚ğİ’è‚·‚é
+  // èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
   glClearColor(back[0], back[1], back[2], back[3]);
 
-  // ƒEƒBƒ“ƒhƒE‚ªŠJ‚¢‚Ä‚¢‚éŠÔ‚­‚è•Ô‚µ•`‰æ‚·‚é
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‹ã„ã¦ã„ã‚‹é–“ãã‚Šè¿”ã—æç”»ã™ã‚‹
   while (!window.shouldClose())
   {
-    // ‰æ–ÊƒNƒŠƒA
+    // ç”»é¢ã‚¯ãƒªã‚¢
     window.clear();
 
-    // ƒVƒF[ƒ_‚Ìg—p
+    // ã‚·ã‚§ãƒ¼ãƒ€ã®ä½¿ç”¨
     glUseProgram(program);
     glUniformMatrix4fv(mtLoc, 1, GL_TRUE, window.getMt().get());
     glUniform1f(spacingLoc, 1.0f / static_cast<GLfloat>(slices - 1));
     glUniform1f(thresholdLoc, window.getThreshold());
 
-    // 3D ƒeƒNƒXƒ`ƒƒ‚Ìƒ}ƒbƒsƒ“ƒO
+    // 3D ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒãƒƒãƒ”ãƒ³ã‚°
     glUniform1i(volumeLoc, 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_3D, volume);
@@ -303,7 +303,7 @@ int main(int argc, const char * argv[])
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_3D, gradient);
 
-    // ƒXƒ‰ƒCƒX‚Ì•`‰æ
+    // ã‚¹ãƒ©ã‚¤ã‚¹ã®æç”»
     glBindVertexArray(slice);
 #if STEREO == NONE
     glUniformMatrix4fv(mwLoc, 1, GL_FALSE, window.getMw().get());
@@ -318,7 +318,7 @@ int main(int argc, const char * argv[])
     glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, slices);
 #endif
 
-    // ƒ_ƒuƒ‹ƒoƒbƒtƒ@ƒŠƒ“ƒO
+    // ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡ãƒªãƒ³ã‚°
     window.swapBuffers();
   }
 
